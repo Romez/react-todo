@@ -11,7 +11,7 @@ module.exports = {
 
     output: {
         publicPath: 'http://localhost:3000/',
-        path: __dirname + '/public',
+        path: path.join(__dirname, 'public'),
         filename: 'bundle.js'
     },
 
@@ -24,7 +24,11 @@ module.exports = {
     devtool: NODE_ENV === 'development' ? 'cheap-module-eval-source-map' : 'source-map',
 
     plugins: [
-        new ExtractTextPlugin('bundle.css', {allChunks: true, disable: process.env.NODE_ENV === 'developmentn'}),
+        new ExtractTextPlugin({
+            filename: 'bundle.css',
+            allChunks: true,
+            disable: NODE_ENV === 'development'
+        }),
         new webpack.DefinePlugin({NODE_ENV: JSON.stringify(NODE_ENV)}),
         new webpack.NoEmitOnErrorsPlugin()
     ],
@@ -44,9 +48,9 @@ module.exports = {
         port: 3000,
         contentBase: __dirname + '/public',
     //
-    //     inline: true,
+        inline: true,
         hot: true,
-    //     historyApiFallback: true
+        historyApiFallback: true
     },
     module: {
         rules: [
@@ -56,7 +60,7 @@ module.exports = {
                 use: {
                     loader: 'babel',
                     options: {
-                        presets: ['es2015'],
+                        presets: ['es2015', 'react', 'stage-0'],
                         plugins: ['transform-runtime']
                     }
                 }
@@ -109,6 +113,7 @@ module.exports = {
 if(NODE_ENV === 'production') {
     module.exports.plugins.push(
         new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
             compress: {
                 warnings: false,
                 drop_console: true,

@@ -1,5 +1,17 @@
-const App = function() {
-    console.log( 'App' );
-};
+import React from 'react';
+import ReactDom from 'react-dom';
+import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
+import configureStore from './store';
+import routes from './routes';
 
-let app = App();
+const store = configureStore();
+
+ReactDom.render((
+    <Provider store={store}>
+        <BrowserRouter >
+            { routes }
+        </BrowserRouter>
+    </Provider>),
+document.querySelector('#app')
+);
