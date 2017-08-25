@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Header} from './components';
+import {Header, Footer} from './components';
 import {DevTools} from './utils';
 import 'reset-css';
+import './less/main';
 
 export default class App extends React.Component {
     static path = '';
     render() {
         return (
-            <main>
+            <div className="mainWrapper">
                 <Header />
-                { this.props.children }
+                <main>
+                    { this.props.children }
+                </main>
+                <Footer />
                 { NODE_ENV === 'development' ? <DevTools/> : null }
-            </main>
+            </div>
         );
     }
 }
