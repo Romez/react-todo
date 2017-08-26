@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class HomePage extends React.Component {
+class HomePage extends React.Component {
     static path = '/';
 
     render() {
@@ -11,3 +11,5 @@ export default class HomePage extends React.Component {
         );
     }
 }
+
+export default HomePage;

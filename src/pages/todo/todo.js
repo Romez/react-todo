@@ -16,7 +16,8 @@ class TodoPage extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(getTodoList());
+        const history = this.props.history;
+        this.props.dispatch(getTodoList(history));
     }
 
     inputChange(value) {
@@ -28,14 +29,12 @@ class TodoPage extends React.Component {
         const id = todoList[todoList.length - 1].id + 1;
         const name = this.state.inputTodo;
         this.props.dispatch( addTodo(id, name) );
-
         this.setState({inputTodo: ''});
     }
 
     render() {
         const { inputTodo } = this.state;
         const { todoList, error } = this.props.todo;
-
         return (
             <div>
                 <h1>Todo</h1>
@@ -67,7 +66,8 @@ class TodoPage extends React.Component {
 
 TodoPage.propTypes = {
     todo: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

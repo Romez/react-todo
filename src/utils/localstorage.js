@@ -2,9 +2,8 @@ import config from './config';
 
 export default class LS {
     static get(field) {
-        if (LS._isExists()) {
+        if (LS.isExists()) {
             const data = JSON.parse(localStorage.getItem(config.localStorage.name));
-
             if (!field) {
                 return data;
             } else if (data[field]) {
@@ -24,11 +23,21 @@ export default class LS {
         } else {
             storage = data;
         }
-
         localStorage.setItem(config.localStorage.name, JSON.stringify(storage));
     }
 
-    static _isExists() {
+    static remove(field) {
+        let storage = LS.get();
+        if (field) {
+            if (!storage) {
+                storage = {};
+            }
+            delete storage[field];
+        }
+        localStorage.setItem(config.localStorage.name, JSON.stringify(storage));
+    }
+
+    static isExists() {
         return localStorage.getItem(config.localStorage.name) ? true : false;
     }
 }

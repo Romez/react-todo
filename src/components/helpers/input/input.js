@@ -8,8 +8,8 @@ class Input extends React.Component {
     }
 
     handleChange(e) {
-        const { value } = e.target;
-        this.props.onChange(value);
+        const { name, value } = e.target;
+        this.props.onChange(name, value);
     }
 
     render() {
@@ -21,8 +21,10 @@ class Input extends React.Component {
             <div className={this.props.divClasses}>
                 <input
                     className={inputClasses}
-                    type="text"
+                    type={this.props.type}
                     value={this.props.value}
+                    name={this.props.name}
+                    placeholder={this.props.placeholder}
                     onChange={ this.handleChange.bind(this) }
                 />
                 { this.props.error ? <span className="helpBlock">{this.props.error}</span> : null }
@@ -33,9 +35,16 @@ class Input extends React.Component {
 
 Input.propTypes = {
     value: PropTypes.string.isRequired,
+    type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     divClasses: PropTypes.string,
+    placeholder: PropTypes.string,
+    name: PropTypes.string,
     error: PropTypes.string
+};
+
+Input.defaultProps = {
+    type: 'text'
 };
 
 export default Input;
