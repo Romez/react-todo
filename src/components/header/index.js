@@ -16,11 +16,6 @@ import {logout} from '../../pages/auth/actions';
 import './styles.less';
 
 class Header extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     logout(e) {
         e.preventDefault();
         this.props.logout();
@@ -28,10 +23,10 @@ class Header extends React.Component {
 
     render() {
         const {pathname} = this.props.location;
-        const { isAuth } = this.props.auth;
+        const { isAuth, user } = this.props.auth;
         const userLinks = (
             <div className={ classnames('menu__item') }>
-                {<a href="#" onClick={this.logout.bind(this)}>Выйти</a>}
+                {<a href="#" onClick={this.logout.bind(this)}>Выйти ({user.username})</a>}
             </div>
         );
         const guestLinks = (
@@ -39,25 +34,29 @@ class Header extends React.Component {
                 {<Link to={LoginPage.path}>Войти</Link>}
             </div>
         );
-
         const todoLink = (
             <div className={ classnames('menu__item', {'active': pathname === TodoPage.path}) }>
                 {<Link to={TodoPage.path}>Список дел</Link>}
             </div>
         );
-
         return (
-            <header>
-                <nav className="menu">
-                    <div className={ classnames('menu__item', {'active': pathname === HomePage.path}) }>
-                        {<Link to={HomePage.path}>Главная</Link>}
+            <header id="header">
+                <div className="wrapper">
+                    <div className={ classnames('brand') }>
+                        {<Link to={HomePage.path}>&#60;UshakovRS/&#62;</Link>}
                     </div>
-                    { isAuth ? todoLink : null }
-                    <div className={ classnames('menu__item', {'active': pathname === ContactsPage.path}) }>
-                        {<Link to={ContactsPage.path}>Контакты</Link>}
-                    </div>
-                    {isAuth ? userLinks : guestLinks}
-                </nav>
+
+                    <nav className="menu">
+                        <div className={ classnames('menu__item', {'active': pathname === HomePage.path}) }>
+                            {<Link to={HomePage.path}>Главная</Link>}
+                        </div>
+                        { isAuth ? todoLink : null }
+                        <div className={ classnames('menu__item', {'active': pathname === ContactsPage.path}) }>
+                            {<Link to={ContactsPage.path}>Контакты</Link>}
+                        </div>
+                        {isAuth ? userLinks : guestLinks}
+                    </nav>
+                </div>
             </header>
         );
     }

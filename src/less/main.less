@@ -1,3 +1,5 @@
+@import "smart-grid";
+
 body, html{
   height: 100%;
 }
@@ -14,5 +16,45 @@ body, html{
   justify-content: space-between;
   main{
     height: 100%;
+  }
+}
+
+.wrapper{
+  margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    max-width: 1170px;
+  }
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    max-width: 962px;
+  }
+}
+@media (min-width: 768px) {
+  .wrapper {
+    max-width: 738px;
+  }
+}
+@media (min-width: 560px) {
+  .wrapper {
+    max-width: 530px;
+  }
+}
+
+#main{
+  margin-top: 50px;
+  .wrapper{
+    .row-flex();
+    .wrapper();
+    #sidebar{
+      .col-3();
+    }
+    #mainSection{
+      .col-9();
+    }
   }
 }

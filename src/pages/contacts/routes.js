@@ -3,5 +3,5 @@ import { Route } from 'react-router-dom';
 import ContactsPage from './contacts';
 
 export default (
-    <Route path={ContactsPage.path} component={ContactsPage}/>
+    <Route exact={true} path={ContactsPage.path} component={ContactsPage}/>
 );

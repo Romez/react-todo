@@ -5,19 +5,20 @@ import App from './app';
 import {HomeRoute} from './pages/home';
 import {ContactsRoute} from './pages/contacts';
 import {TodoRoute} from './pages/todo';
-import {AdminRoute} from './pages/admin';
 import {AuthRoute} from './pages/auth';
+import {RubricsRoute} from './pages/rubrics';
 import ErrorPage from './pages/error';
+
 
 export default (
     <App>
         <Switch>
             {HomeRoute}
+            {RubricsRoute}
             {ContactsRoute}
             {TodoRoute}
-            {AdminRoute}
             {AuthRoute}
-            <Route path="*" component={ErrorPage}/>
+            <Route component={ErrorPage}/>
         </Switch>
     </App>
 );
