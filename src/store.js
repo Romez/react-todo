@@ -3,15 +3,14 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import {DevTools} from './utils';
 
-function _getMiddleware() {
+function getMiddleware() {
     const middleware = [thunk];
-
     return applyMiddleware(...middleware);
 }
 
 export default function configureStore(intialState) {
     return compose(
-        _getMiddleware(),
+        getMiddleware(),
         DevTools.instrument()
     )(createStore)(rootReducer, intialState);
 }

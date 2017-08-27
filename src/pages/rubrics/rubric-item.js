@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom';
 import {getRubric} from './actions';
 
 class RubricItemPage extends React.Component {
@@ -17,7 +16,7 @@ class RubricItemPage extends React.Component {
     }
 
     render() {
-        const {rubric} = this.props.rubric;
+        const {rubric} = this.props.rubrics;
         return (
             <div>
                 <h1>Рубрика {rubric.name}</h1>
@@ -29,13 +28,13 @@ class RubricItemPage extends React.Component {
 RubricItemPage.propTypes = {
     match: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
-    rubric: PropTypes.object.isRequired
+    rubrics: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        rubric: state.rubric
+        rubrics: state.rubrics
     };
 }
 
-export default withRouter(connect(mapStateToProps)(RubricItemPage));
+export default connect(mapStateToProps)(RubricItemPage);

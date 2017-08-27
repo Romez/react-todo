@@ -1,6 +1,8 @@
-import {GET_RUBRIC} from './actions';
+import {GET_RUBRIC, GET_RUBRICS_LIST} from './actions';
+
 
 const initialState = {
+    rubrics: [],
     rubric: {},
     error: ''
 };
@@ -12,13 +14,18 @@ function rubricReducer(state = initialState, action) {
                 rubric: action.rubric
             });
 
+        case GET_RUBRICS_LIST:
+            return Object.assign({}, state, {
+                rubrics: action.rubrics
+            });
+
         default:
             return state;
     }
 }
 
 const RubricReducer = {
-    rubric: rubricReducer
+    rubrics: rubricReducer
 };
 
 export default RubricReducer;
