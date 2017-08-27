@@ -1,9 +1,10 @@
-import {GET_RUBRIC, GET_RUBRICS_LIST} from './actions';
+import {GET_RUBRIC, GET_RUBRICS_LIST, GET_RUBRIC_ARTICLES} from './actions';
 
 
 const initialState = {
     rubrics: [],
     rubric: {},
+    rubricArticles: [],
     error: ''
 };
 
@@ -17,6 +18,10 @@ function rubricReducer(state = initialState, action) {
         case GET_RUBRICS_LIST:
             return Object.assign({}, state, {
                 rubrics: action.rubrics
+            });
+        case GET_RUBRIC_ARTICLES:
+            return Object.assign({}, state, {
+                rubricArticles: action.rubricArticles
             });
 
         default:

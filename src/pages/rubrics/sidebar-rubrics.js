@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {getRubricsList, getRubric} from './actions';
+import {getRubricsList, getRubric, getRubricArticles} from './actions';
 import RubricsPage from './rubrics';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -19,6 +19,7 @@ class SidebarRubrics extends React.Component {
 
     getRubric(e) {
         this.props.dispatch(getRubric(e.target.dataset.slug));
+        this.props.dispatch(getRubricArticles(e.target.dataset.slug));
     }
 
     renderSidebarItem(item, i) {

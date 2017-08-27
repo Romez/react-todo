@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 class AdminPage extends React.Component {
     static path = '/admin';
@@ -12,4 +13,9 @@ class AdminPage extends React.Component {
     }
 }
 
-export default AdminPage;
+function mapStateToProps(state) {
+    return {
+        admin: state.admin
+    };
+}
+export default connect(mapStateToProps)(AdminPage);

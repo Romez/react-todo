@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import RubricsPage from './rubrics';
-import RubricItemPage from './rubric-item';
+import RubricPage from './rubric';
 
 class RubricRoutes extends React.Component {
     static path = '/rubrics';
@@ -10,7 +10,7 @@ class RubricRoutes extends React.Component {
             <div>
                 <Switch>
                     <Route exact path={RubricsPage.path} component={RubricsPage}/>
-                    <Route path={RubricItemPage.path} component={RubricItemPage}/>
+                    <Route path={RubricPage.path} component={RubricPage}/>
                 </Switch>
             </div>
         );

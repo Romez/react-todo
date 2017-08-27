@@ -7,6 +7,7 @@ import {ContactsRoute} from './pages/contacts';
 import {TodoRoute} from './pages/todo';
 import {AuthRoute} from './pages/auth';
 import {RubricsRoute} from './pages/rubrics';
+import {ArticleRoute} from './pages/articles';
 import ErrorPage from './pages/error';
 
 
@@ -18,6 +19,7 @@ export default (
             {ContactsRoute}
             {TodoRoute}
             {AuthRoute}
+            {ArticleRoute}
             <Route component={ErrorPage}/>
         </Switch>
     </App>

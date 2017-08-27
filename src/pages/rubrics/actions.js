@@ -2,6 +2,7 @@ import Axios from 'axios';
 
 export const GET_RUBRIC = 'GET_RUBRIC';
 export const GET_RUBRICS_LIST = 'GET_RUBRICS_LIST';
+export const GET_RUBRIC_ARTICLES = 'GET_RUBRIC_ARTICLES';
 
 export function getRubric(slug) {
     return dispatch => {
@@ -11,6 +12,22 @@ export function getRubric(slug) {
                 rubric: res.data.rubric
             });
         }).catch(error => {
+            if (error.response.status === 403) {
+                history.push(LoginPage.path);
+            }
+        });
+    };
+}
+
+export function getRubricArticles(slug) {
+    return dispatch => {
+        return Axios.get(`http://localhost:9088/rubric-articles/${slug}`).then(res => {
+            dispatch({
+                type: GET_RUBRIC_ARTICLES,
+                rubricArticles: res.data.rubricArticles
+            });
+        }).catch(error => {
+            console.log( error );
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
             }
