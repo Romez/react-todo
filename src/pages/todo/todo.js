@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {addTodo, getTodoList} from './actions';
-import Input from '../../components/helpers/input/input';
+import Input from '../../components/helpers/input/Input';
 import './style';
 
 class TodoPage extends React.Component {

@@ -9,9 +9,6 @@ class LogoutPage extends React.Component {
 
     constructor(props) {
         super(props);
-
-        const history = this.props.history;
-        console.log( history );
     }
 }
 

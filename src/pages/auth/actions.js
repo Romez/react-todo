@@ -36,32 +36,6 @@ export function login(username, password, history) {
             dispatch(setCurrentUser(( jwt.decode(token) )));
         });
     };
-
-    // return (dispatch) => {
-    //     Axios.post('http://localhost:9088/users/auth', {
-    //         username, password
-    //     })
-    //         .then(res => {
-    //             const token = res.data.token;
-    //             const user = res.data.username;
-    //
-    //             LS.set('auth', {token, username: user});
-    //
-    //             dispatch({
-    //                 type: LOGIN,
-    //                 error, token, username: user
-    //             });
-    //
-    //             history.push('/todo');
-    //         })
-    //         .catch((er) => {
-    //             error = 'Неверные имя пользовател или пароль';
-    //             dispatch({
-    //                 type: LOGIN,
-    //                 error
-    //             });
-    //         });
-    // };
 }
 
 export function logout() {

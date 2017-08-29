@@ -1,0 +1,1 @@
+export ArticleAddPage from './ArticleAddPage';

@@ -1,17 +1,9 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
-import {Link, withRouter} from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import classnames from 'classnames';
-import {connect} from 'react-redux';
-
-import {HomePage} from '../../pages/home';
-import {ContactsPage} from '../../pages/contacts';
-import {TodoPage} from '../../pages/todo';
-
-import {LoginPage} from '../../pages';
-
-import {logout} from '../../pages/auth/actions';
+import {LoginPage, TodoPage, ContactsPage, HomePage} from '../../pages';
 
 import './styles.less';
 
@@ -24,6 +16,7 @@ class Header extends React.Component {
     render() {
         const {pathname} = this.props.location;
         const { isAuth, user } = this.props.auth;
+
         const userLinks = (
             <div className={ classnames('menu__item') }>
                 {<a href="#" onClick={this.logout.bind(this)}>Выйти ({user.username})</a>}
@@ -39,6 +32,7 @@ class Header extends React.Component {
                 {<Link to={TodoPage.path}>Список дел</Link>}
             </div>
         );
+
         return (
             <header id="header">
                 <div className="wrapper">
@@ -68,10 +62,4 @@ Header.propTypes = {
     location: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-    return {
-        auth: state.auth
-    };
-}
-
-export default withRouter(connect(mapStateToProps, {logout})(Header));
+export default Header;

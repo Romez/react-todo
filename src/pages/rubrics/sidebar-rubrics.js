@@ -9,10 +9,6 @@ import classNames from 'classnames';
 import './styles.less';
 
 class SidebarRubrics extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount() {
         this.props.dispatch(getRubricsList(this.props.history));
     }

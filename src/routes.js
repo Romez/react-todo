@@ -8,8 +8,8 @@ import {TodoRoute} from './pages/todo';
 import {AuthRoute} from './pages/auth';
 import {RubricsRoute} from './pages/rubrics';
 import {ArticleRoute} from './pages/articles';
+import {SettingsRoutes} from './pages/settings';
 import ErrorPage from './pages/error';
-
 
 export default (
     <App>
@@ -20,6 +20,7 @@ export default (
             {TodoRoute}
             {AuthRoute}
             {ArticleRoute}
+            {SettingsRoutes}
             <Route component={ErrorPage}/>
         </Switch>
     </App>

@@ -8,7 +8,7 @@ import {LS, setAuthToken} from './utils';
 import {setCurrentUser} from './pages/auth/actions';
 import jwt from 'jsonwebtoken';
 
-const store = configureStore();
+export const store = configureStore();
 
 if (LS.get('token')) {
     setAuthToken(LS.get('token'));

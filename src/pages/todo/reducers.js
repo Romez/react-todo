@@ -1,16 +1,7 @@
 import {ADD_TODO, GET_TODO_LIST} from './actions';
 
 const initialState = {
-    todoList: [
-        // {
-        //     id: 1,
-        //     name: 'Todo 1'
-        // },
-        // {
-        //     id: 2,
-        //     name: 'Todo 2'
-        // }
-    ],
+    todoList: [],
     error: ''
 };
 

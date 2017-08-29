@@ -27,7 +27,6 @@ export function getRubricArticles(slug) {
                 rubricArticles: res.data.rubricArticles
             });
         }).catch(error => {
-            console.log( error );
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
             }

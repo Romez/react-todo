@@ -5,11 +5,13 @@ import {TodoReducer} from './pages/todo';
 import {AuthReducer} from './pages/auth';
 import {RubricReducer} from './pages/rubrics';
 import {ArticleReducer} from './pages/articles';
+import {SettingsReducer} from './pages/settings';
 
 export default combineReducers({
     routing: routerReducer,
     ...TodoReducer,
     ...AuthReducer,
     ...RubricReducer,
-    ...ArticleReducer
+    ...ArticleReducer,
+    ...SettingsReducer
 });
