@@ -1,11 +1,23 @@
-import {ADD_ARTICLE} from './actions';
+import {ADD_ARTICLE, SKIP_ERROR} from './actions';
 
-const initialState = {};
+const initialState = {
+    errors: {
+        title: '',
+        rubric: '',
+        body: ''
+    }
+};
 
 function settingsReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_ARTICLE:
-            return state;
+            return Object.assign({}, state, {
+                errors: action.errors
+            });
+        case SKIP_ERROR:
+            const {errors} = state;
+            delete errors[action.name];
+            return Object.assign({}, state, {errors});
         default:
             return state;
     }

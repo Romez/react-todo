@@ -37,6 +37,7 @@ class SidebarRubrics extends React.Component {
         const {rubrics} = this.props.rubrics;
         return (
             <div className="sidebarRubrics">
+                {<Link className="title" to={RubricsPage.path}>Рубрики</Link> }
                 {rubrics.map(this.renderSidebarItem.bind(this))}
             </div>
         );

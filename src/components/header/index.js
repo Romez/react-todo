@@ -1,11 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
-
-import classnames from 'classnames';
-import {LoginPage, TodoPage, ContactsPage, HomePage} from '../../pages';
-
-import './styles.less';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { LoginPage, TodoPage, ContactsPage, HomePage, ArticleAddPage } from '../../pages';
 
 class Header extends React.Component {
     logout(e) {
@@ -14,43 +12,69 @@ class Header extends React.Component {
     }
 
     render() {
-        const {pathname} = this.props.location;
         const { isAuth, user } = this.props.auth;
 
         const userLinks = (
-            <div className={ classnames('menu__item') }>
-                {<a href="#" onClick={this.logout.bind(this)}>Выйти ({user.username})</a>}
-            </div>
+            <NavItem
+                href="#"
+                onClick={this.logout.bind(this)}
+            >Выйти ({user.username})</NavItem>
         );
         const guestLinks = (
-            <div className={ classnames('menu__item', {'active': pathname === LoginPage.path}) }>
-                {<Link to={LoginPage.path}>Войти</Link>}
-            </div>
+            <LinkContainer to={ LoginPage.path }>
+                <NavItem>Войти</NavItem>
+            </LinkContainer>
         );
         const todoLink = (
-            <div className={ classnames('menu__item', {'active': pathname === TodoPage.path}) }>
-                {<Link to={TodoPage.path}>Список дел</Link>}
-            </div>
+            <LinkContainer to={ TodoPage.path }>
+                <NavItem>
+                    Список дел
+                </NavItem>
+            </LinkContainer>
         );
+        const settingsLink = (
+            <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Настройки" id="settingsDropdown">
+                <LinkContainer exact={true} to={ ArticleAddPage.path }>
+                    <NavItem>
+                        Добавить статью
+                    </NavItem>
+                </LinkContainer>
+            </NavDropdown>
+        );
+
 
         return (
             <header id="header">
-                <div className="wrapper">
-                    <div className={ classnames('brand') }>
-                        {<Link to={HomePage.path}>&#60;UshakovRS/&#62;</Link>}
-                    </div>
+                <Navbar inverse collapseOnSelect>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            {<Link to={HomePage.path}>&#60;UshakovRS/&#62;</Link>}
+                        </Navbar.Brand>
+                        <Navbar.Toggle />
+                    </Navbar.Header>
+                    <Navbar.Collapse>
+                        <Nav pullRight>
+                            <LinkContainer exact={true} to={ HomePage.path }>
+                                <NavItem>
+                                    Главная
+                                </NavItem>
+                            </LinkContainer>
 
-                    <nav className="menu">
-                        <div className={ classnames('menu__item', {'active': pathname === HomePage.path}) }>
-                            {<Link to={HomePage.path}>Главная</Link>}
-                        </div>
-                        { isAuth ? todoLink : null }
-                        <div className={ classnames('menu__item', {'active': pathname === ContactsPage.path}) }>
-                            {<Link to={ContactsPage.path}>Контакты</Link>}
-                        </div>
-                        {isAuth ? userLinks : guestLinks}
-                    </nav>
-                </div>
+                            {isAuth && todoLink}
+
+                            <LinkContainer to={ ContactsPage.path }>
+                                <NavItem >
+                                    Контакты
+                                </NavItem>
+                            </LinkContainer>
+
+                            {isAuth && settingsLink}
+
+                            {isAuth ? userLinks : guestLinks}
+
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </header>
         );
     }
