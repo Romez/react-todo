@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import TinyMCE from 'react-tinymce';
 import { FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
 import moment from 'moment';
+import {bindAll} from 'lodash';
+import Dropzone from 'react-dropzone';
+import ReactCrop from 'react-image-crop';
 import {addArticle, skipErrors} from '../actions';
+
+import 'react-image-crop/dist/ReactCrop.css';
 
 class ArticleAddForm extends React.Component {
     constructor(props) {
@@ -12,17 +17,14 @@ class ArticleAddForm extends React.Component {
         this.state = {
             rubric: '',
             title: '',
-            body: ''
+            body: '',
+            imagePreviewUrl: '',
+            dropzoneDisabled: false,
+            cropDisabled: true,
+            crop: {}
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.handleEditorChange = this.handleEditorChange.bind(this);
-        this.submitForm = this.submitForm.bind(this);
-    }
-
-    handleEditorChange(e) {
-        this.props.dispatch(skipErrors('body'));
-        this.setState({'body': e.target.getContent()});
+        bindAll(this, ['onChange', 'handleEditorChange', 'submitForm', 'onDrop']);
     }
 
     onChange(e) {
@@ -31,17 +33,74 @@ class ArticleAddForm extends React.Component {
         this.setState({[name]: value});
     }
 
+    handleEditorChange(e) {
+        this.props.dispatch(skipErrors('body'));
+        this.setState({'body': e.target.getContent()});
+    }
+
+    onDrop(acceptedFiles, rejectedFiles) {
+        acceptedFiles.forEach(file => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                this.setState({
+                    imagePreviewUrl: reader.result
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
     submitForm(e) {
         e.preventDefault();
-        const {rubric, body, title} = this.state;
+        const {rubric, body, title, imagePreviewUrl} = this.state;
         this.props.dispatch(
-            addArticle( rubric, body, title, moment().unix(), this.props.history)
+            addArticle( rubric, body, title, moment().unix(), imagePreviewUrl, this.props.history)
         );
     }
 
     getValidationState(name) {
         const error = this.props.errors[name];
         return error ? 'error' : null;
+    }
+
+    onImageLoaded(crop) {
+        // console.log('Image was loaded. Crop:', crop);
+        this.setState({
+            dropzoneDisabled: true,
+            cropDisabled: false
+        });
+    }
+
+    onCropComplete(crop, pixelCrop) {
+        // console.log('Crop move complete:', crop, pixelCrop);
+
+        const imgObject = new Image();
+        imgObject.src = this.state.imagePreviewUrl;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = imgObject.width;
+        canvas.height = imgObject.height;
+        const context = canvas.getContext('2d');
+
+        console.log( pixelCrop );
+
+        context.drawImage(
+            imgObject,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            pixelCrop.width,
+            pixelCrop.height
+        );
+        const base64ImageData = canvas.toDataURL();
+        this.setState({
+            dropzoneDisabled: false,
+            cropDisabled: true,
+            imagePreviewUrl: base64ImageData
+        });
     }
 
     render() {
@@ -51,6 +110,28 @@ class ArticleAddForm extends React.Component {
 
         return (
             <form onSubmit={this.submitForm}>
+                <ControlLabel>Картинка</ControlLabel>
+                <FormGroup>
+                    <Dropzone
+                        className={'dropzone'}
+                        accept="image/jpeg, image/png"
+                        onDrop={this.onDrop}
+                        disabled={this.state.dropzoneDisabled}
+                    >
+                        <ReactCrop
+                            src={this.state.imagePreviewUrl}
+                            disabled ={this.state.cropDisabled}
+                            crop={{
+                                x: 20,
+                                y: 5,
+                                aspect: 17/4
+                            }}
+                            onImageLoaded={this.onImageLoaded.bind(this)}
+                            onComplete={this.onCropComplete.bind(this)}
+                        />
+                    </Dropzone>
+                </FormGroup>
+
                 <FormGroup validationState={ this.getValidationState('rubric') }>
                     <ControlLabel>Рубрика</ControlLabel>
                     <FormControl
@@ -81,11 +162,31 @@ class ArticleAddForm extends React.Component {
                 <FormGroup validationState={ this.getValidationState('body') }>
                     <ControlLabel>Статья</ControlLabel>
                     <TinyMCE
+                        apiKey="0mm27xdqdxttv00qjx3rxv23htjstfaacfxkwmppp68e4d25"
                         name="body"
                         content={this.state.body}
                         config={{
                             plugins: 'link image code',
-                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+                            paste_data_images: true,
+                            file_picker_callback: function(cb, value, meta) {
+                                const input = document.createElement('input');
+                                input.setAttribute('type', 'file');
+                                input.setAttribute('accept', 'image/*');
+
+                                input.onchange = function() {
+                                    const file = this.files[0];
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        cb(e.target.result, {
+                                            alt: ''
+                                        });
+                                    };
+                                    reader.readAsDataURL(file);
+                                };
+
+                                input.click();
+                            }
                         }}
                         onChange={this.handleEditorChange}
                     />

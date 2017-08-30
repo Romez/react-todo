@@ -54,8 +54,10 @@ SidebarRubrics.propTypes = {
 
 function mapStateToProps(state) {
     return {
+        auth: state.auth,
         rubrics: state.rubrics
     };
 }
 
 export default withRouter(connect(mapStateToProps)(SidebarRubrics));
+

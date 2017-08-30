@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {unix} from 'moment';
+import renderHTML from 'react-render-html';
 import {getArticle} from './actions';
 import './styles.less';
 
@@ -14,7 +15,8 @@ class ArticlePage extends React.Component {
     }
 
     render() {
-        const {title, body, created_at} = this.props.article.article;
+        const {title, body, created_at, preview} = this.props.article.article;
+        console.log( preview );
         const moment = unix(created_at);
         return (
             <section id="article">
@@ -25,7 +27,8 @@ class ArticlePage extends React.Component {
                     {moment.format('D.MM.gggg')}
                 </time>
                 <article>
-                    {body}
+                    <img className="preview" src={preview} alt="фото"/>
+                    {renderHTML(String(body))}
                 </article>
 
             </section>

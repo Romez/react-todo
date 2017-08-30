@@ -1,9 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { LoginPage, TodoPage, ContactsPage, HomePage, ArticleAddPage } from '../../pages';
+import { LoginPage, TodoPage, ContactsPage, HomePage, ArticleAddPage, RubricsPage } from '../../pages';
+import {logout} from '../../pages/auth/actions';
+import {getRubric, getRubricArticles} from '../../pages/rubrics/actions';
+import {store} from '../../index';
 
 class Header extends React.Component {
     logout(e) {
@@ -11,8 +15,15 @@ class Header extends React.Component {
         this.props.logout();
     }
 
+    changeRubric(e) {
+        const {slug} = e.target.dataset;
+        store.dispatch(getRubric(slug));
+        store.dispatch(getRubricArticles(slug));
+    }
+
     render() {
         const { isAuth, user } = this.props.auth;
+        const { rubrics } = this.props.rubrics;
 
         const userLinks = (
             <NavItem
@@ -42,7 +53,6 @@ class Header extends React.Component {
             </NavDropdown>
         );
 
-
         return (
             <header id="header">
                 <Navbar inverse collapseOnSelect>
@@ -59,6 +69,22 @@ class Header extends React.Component {
                                     Главная
                                 </NavItem>
                             </LinkContainer>
+
+                            <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Рубрики" id="rubricsDropdown">
+                                {rubrics.map( (item, i) => (
+                                    <LinkContainer
+                                        key={i}
+                                        to={`${RubricsPage.path}/${item.slug}`}
+                                        onClick={this.changeRubric.bind(this)}
+                                        data-slug={item.slug}
+                                    >
+                                        <NavItem>
+                                            {item.name}
+                                        </NavItem>
+                                    </LinkContainer>
+                                ))}
+
+                            </NavDropdown>
 
                             {isAuth && todoLink}
 
@@ -83,7 +109,15 @@ class Header extends React.Component {
 Header.propTypes = {
     auth: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    rubrics: PropTypes.object.isRequired
 };
 
-export default Header;
+function mapStateToProps(state) {
+    return {
+        auth: state.auth,
+        rubrics: state.rubrics
+    };
+}
+
+export default withRouter(connect(mapStateToProps, {logout, getRubric, getRubricArticles})(Header));

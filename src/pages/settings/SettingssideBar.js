@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import classname from 'classnames';
 import {ArticleAddPage} from './article';
 import SettingsPage from './SettingsPage';
@@ -26,4 +27,7 @@ SettingsSidebar.propTypes = {
     location: PropTypes.object.isRequired
 };
 
-export default SettingsSidebar;
+function mapStateToProps() {
+    return {};
+}
+export default withRouter(connect(mapStateToProps)(SettingsSidebar));

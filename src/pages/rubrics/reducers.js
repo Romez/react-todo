@@ -1,6 +1,5 @@
 import {GET_RUBRIC, GET_RUBRICS_LIST, GET_RUBRIC_ARTICLES} from './actions';
 
-
 const initialState = {
     rubrics: [],
     rubric: {},

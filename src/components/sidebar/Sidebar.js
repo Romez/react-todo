@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { SidebarRubrics } from '../../pages/rubrics';
 import { SettingsSidebar } from '../../pages/settings';
 
@@ -10,10 +12,8 @@ class Sidebar extends React.Component {
         const { isAuth } = this.props.auth;
         return (
             <div>
-                <SidebarRubrics
-                    location={this.props.location}
-                />
-                {isAuth && <SettingsSidebar location={this.props.location}/>}
+                <SidebarRubrics />
+                {isAuth && <SettingsSidebar />}
             </div>
         );
     }
@@ -21,7 +21,13 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
     auth: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
 };
 
-export default Sidebar;
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+    };
+}
+
+export default withRouter(connect(mapStateToProps)(Sidebar));

@@ -2,15 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import {unix} from 'moment';
+import ReactPaginate from 'react-paginate';
 import {getRubric, getRubricArticles} from './actions';
 import ArticlePage from '../articles/article';
-import {unix} from 'moment';
+import _ from 'lodash';
 
 class RubricPage extends React.Component {
     static path = '/rubrics/:slug';
 
     constructor(props) {
         super(props);
+        this.state = {
+            offset: 0
+        };
     }
 
     componentWillMount() {
@@ -33,13 +38,34 @@ class RubricPage extends React.Component {
         );
     }
 
+    handlePageClick(data) {
+        const selected = data.selected;
+        const offset = Math.ceil(selected * 5);
+        this.setState({offset: offset});
+    }
+
     render() {
         const {rubric, rubricArticles} = this.props.rubrics;
+        const rubrics = _.slice(rubricArticles, this.state.offset, this.state.offset + 5);
         return (
             <div>
                 <h2 className="rubricName">Рубрика {rubric.name}</h2>
                 <div className="articles">
-                    {rubricArticles.map(this.renderArticle.bind(this))}
+                    {rubrics.map(this.renderArticle.bind(this))}
+
+                    <ReactPaginate
+                        previousLabel="&lt;"
+                        nextLabel="&gt;"
+                        breakLabel={<a onClick={() => { return;}}>...</a>}
+                        pageCount={rubricArticles.length / 5}
+                        marginPagesDisplayed={1}
+                        pageRangeDisplayed={2}
+                        onPageChange={this.handlePageClick.bind(this)}
+                        containerClassName="pagination"
+                        subContainerClassName="pages pagination"
+                        activeClassName="active"
+                    />
+
                 </div>
             </div>
         );
