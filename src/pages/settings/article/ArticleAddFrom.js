@@ -17,10 +17,11 @@ class ArticleAddForm extends React.Component {
             rubric: '',
             title: '',
             body: '',
-            preview: ''
+            preview: '',
+            file: '/img/945x200.png'
         };
 
-        bindAll(this, ['onChange', 'onChangeFile', 'handleEditorChange', 'submitForm', 'crop']);
+        bindAll(this, ['onChange', 'onChangeFile', 'handleEditorChange', 'submitForm', 'cropend', 'cropReady', 'zoom']);
     }
 
     onChange(e) {
@@ -45,7 +46,6 @@ class ArticleAddForm extends React.Component {
         reader.readAsDataURL(file);
     }
 
-
     submitForm(e) {
         e.preventDefault();
         const {rubric, body, title, preview} = this.state;
@@ -59,7 +59,20 @@ class ArticleAddForm extends React.Component {
         return error ? 'error' : null;
     }
 
-    crop() {
+    cropReady() {
+        console.log( 'ready' );
+        this.setState({
+            preview: this.refs.cropper.getCroppedCanvas().toDataURL()
+        });
+    }
+
+    cropend() {
+        this.setState({
+            preview: this.refs.cropper.getCroppedCanvas().toDataURL()
+        });
+    }
+
+    zoom() {
         this.setState({
             preview: this.refs.cropper.getCroppedCanvas().toDataURL()
         });
@@ -80,8 +93,12 @@ class ArticleAddForm extends React.Component {
                         src={this.state.file}
                         style={{height: 200, width: '100%'}}
                         aspectRatio={20 / 4}
-                        // guides={false}
-                        crop={this.crop} />
+                        guides={false}
+                        cropend={this.cropend}
+                        ready={this.cropReady}
+                        zoom={this.zoom}
+                    />
+
                     <FormControl
                         type="file"
                         onChange={this.onChangeFile}

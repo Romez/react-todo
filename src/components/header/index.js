@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { LoginPage, TodoPage, ContactsPage, HomePage, ArticleAddPage, RubricsPage } from '../../pages';
+import { LoginPage, ContactsPage, HomePage, ArticleAddPage, RubricsPage } from '../../pages';
 import {logout} from '../../pages/auth/actions';
 import {getRubric, getRubricArticles} from '../../pages/rubrics/actions';
 import {store} from '../../index';
@@ -36,13 +36,6 @@ class Header extends React.Component {
                 <NavItem>Войти</NavItem>
             </LinkContainer>
         );
-        const todoLink = (
-            <LinkContainer to={ TodoPage.path }>
-                <NavItem>
-                    Список дел
-                </NavItem>
-            </LinkContainer>
-        );
         const settingsLink = (
             <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Настройки" id="settingsDropdown">
                 <LinkContainer exact={true} to={ ArticleAddPage.path }>
@@ -55,7 +48,7 @@ class Header extends React.Component {
 
         return (
             <header id="header">
-                <Navbar inverse collapseOnSelect>
+                <Navbar inverse collapseOnSelect staticTop>
                     <Navbar.Header>
                         <Navbar.Brand>
                             {<Link to={HomePage.path}>&#60;UshakovRS/&#62;</Link>}
@@ -85,8 +78,6 @@ class Header extends React.Component {
                                 ))}
 
                             </NavDropdown>
-
-                            {isAuth && todoLink}
 
                             <LinkContainer to={ ContactsPage.path }>
                                 <NavItem >

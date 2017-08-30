@@ -13,28 +13,28 @@ class App extends React.Component {
     render() {
         return (
             <Grid bsClass="container-fluid">
-                <Row>
-                    <Header/>
-                </Row>
-
-                <Grid bsClass="container">
+                <main>
                     <Row>
-                        <main id="main">
-                            <Col xsHidden xs={12} sm={2} id="sidebar">
-                                <Sidebar/>
-                            </Col>
-                            <Col xs={12} sm={10} id="mainSection">
-                                { this.props.children }
-                            </Col>
-                        </main>
+                        <Header/>
                     </Row>
-                </Grid>
 
+                    <Grid bsClass="container content">
+                        <Row>
+                            <section>
+                                <Col xsHidden xs={12} sm={3} md={3} id="sidebar">
+                                    <Sidebar/>
+                                </Col>
+                                <Col xs={12} sm={9} md={9} id="mainSection">
+                                    { this.props.children }
+                                </Col>
+                            </section>
+                        </Row>
+                    </Grid>
 
-                <Row>
-                    <Footer />
-                </Row>
-
+                    <Row>
+                        <Footer />
+                    </Row>
+                </main>
                 { NODE_ENV === 'development' ? <DevTools/> : null }
             </Grid>
         );

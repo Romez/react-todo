@@ -40,13 +40,13 @@ class RubricPage extends React.Component {
 
     handlePageClick(data) {
         const selected = data.selected;
-        const offset = Math.ceil(selected * 5);
+        const offset = Math.ceil(selected * 8);
         this.setState({offset: offset});
     }
 
     render() {
         const {rubric, rubricArticles} = this.props.rubrics;
-        const rubrics = _.slice(rubricArticles, this.state.offset, this.state.offset + 5);
+        const rubrics = _.slice(rubricArticles, this.state.offset, this.state.offset + 8);
         return (
             <div>
                 <h2 className="rubricName">Рубрика {rubric.name}</h2>
@@ -57,7 +57,7 @@ class RubricPage extends React.Component {
                         previousLabel="&lt;"
                         nextLabel="&gt;"
                         breakLabel={<a onClick={() => { return;}}>...</a>}
-                        pageCount={rubricArticles.length / 5}
+                        pageCount={rubricArticles.length / 8}
                         marginPagesDisplayed={1}
                         pageRangeDisplayed={2}
                         onPageChange={this.handlePageClick.bind(this)}

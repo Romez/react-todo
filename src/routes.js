@@ -4,7 +4,6 @@ import App from './app';
 
 import {HomeRoute} from './pages/home';
 import {ContactsRoute} from './pages/contacts';
-import {TodoRoute} from './pages/todo';
 import {AuthRoute} from './pages/auth';
 import {RubricsRoute} from './pages/rubrics';
 import {ArticleRoute} from './pages/articles';
@@ -17,7 +16,6 @@ export default (
             {HomeRoute}
             {RubricsRoute}
             {ContactsRoute}
-            {TodoRoute}
             {AuthRoute}
             {ArticleRoute}
             {SettingsRoutes}
