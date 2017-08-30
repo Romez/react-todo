@@ -4,11 +4,10 @@ import TinyMCE from 'react-tinymce';
 import { FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
 import moment from 'moment';
 import {bindAll} from 'lodash';
-import Dropzone from 'react-dropzone';
-import ReactCrop from 'react-image-crop';
 import {addArticle, skipErrors} from '../actions';
 
-import 'react-image-crop/dist/ReactCrop.css';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
 class ArticleAddForm extends React.Component {
     constructor(props) {
@@ -18,13 +17,10 @@ class ArticleAddForm extends React.Component {
             rubric: '',
             title: '',
             body: '',
-            imagePreviewUrl: '',
-            dropzoneDisabled: false,
-            cropDisabled: true,
-            crop: {}
+            preview: ''
         };
 
-        bindAll(this, ['onChange', 'handleEditorChange', 'submitForm', 'onDrop']);
+        bindAll(this, ['onChange', 'onChangeFile', 'handleEditorChange', 'submitForm', 'crop']);
     }
 
     onChange(e) {
@@ -38,23 +34,23 @@ class ArticleAddForm extends React.Component {
         this.setState({'body': e.target.getContent()});
     }
 
-    onDrop(acceptedFiles, rejectedFiles) {
-        acceptedFiles.forEach(file => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                this.setState({
-                    imagePreviewUrl: reader.result
-                });
-            };
-            reader.readAsDataURL(file);
-        });
+    onChangeFile(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            this.setState({
+                file: reader.result
+            });
+        };
+        reader.readAsDataURL(file);
     }
+
 
     submitForm(e) {
         e.preventDefault();
-        const {rubric, body, title, imagePreviewUrl} = this.state;
+        const {rubric, body, title, preview} = this.state;
         this.props.dispatch(
-            addArticle( rubric, body, title, moment().unix(), imagePreviewUrl, this.props.history)
+            addArticle( rubric, body, title, moment().unix(),  preview, this.props.history)
         );
     }
 
@@ -63,43 +59,9 @@ class ArticleAddForm extends React.Component {
         return error ? 'error' : null;
     }
 
-    onImageLoaded(crop) {
-        // console.log('Image was loaded. Crop:', crop);
+    crop() {
         this.setState({
-            dropzoneDisabled: true,
-            cropDisabled: false
-        });
-    }
-
-    onCropComplete(crop, pixelCrop) {
-        // console.log('Crop move complete:', crop, pixelCrop);
-
-        const imgObject = new Image();
-        imgObject.src = this.state.imagePreviewUrl;
-
-        const canvas = document.createElement('canvas');
-        canvas.width = imgObject.width;
-        canvas.height = imgObject.height;
-        const context = canvas.getContext('2d');
-
-        console.log( pixelCrop );
-
-        context.drawImage(
-            imgObject,
-            pixelCrop.x,
-            pixelCrop.y,
-            pixelCrop.width,
-            pixelCrop.height,
-            0,
-            0,
-            pixelCrop.width,
-            pixelCrop.height
-        );
-        const base64ImageData = canvas.toDataURL();
-        this.setState({
-            dropzoneDisabled: false,
-            cropDisabled: true,
-            imagePreviewUrl: base64ImageData
+            preview: this.refs.cropper.getCroppedCanvas().toDataURL()
         });
     }
 
@@ -110,26 +72,21 @@ class ArticleAddForm extends React.Component {
 
         return (
             <form onSubmit={this.submitForm}>
-                <ControlLabel>Картинка</ControlLabel>
                 <FormGroup>
-                    <Dropzone
-                        className={'dropzone'}
-                        accept="image/jpeg, image/png"
-                        onDrop={this.onDrop}
-                        disabled={this.state.dropzoneDisabled}
-                    >
-                        <ReactCrop
-                            src={this.state.imagePreviewUrl}
-                            disabled ={this.state.cropDisabled}
-                            crop={{
-                                x: 20,
-                                y: 5,
-                                aspect: 17/4
-                            }}
-                            onImageLoaded={this.onImageLoaded.bind(this)}
-                            onComplete={this.onCropComplete.bind(this)}
-                        />
-                    </Dropzone>
+                    <ControlLabel>Изображение</ControlLabel>
+                    <img className="preview" src={this.state.preview} alt=""/>
+                    <Cropper
+                        ref={'cropper'}
+                        src={this.state.file}
+                        style={{height: 200, width: '100%'}}
+                        aspectRatio={20 / 4}
+                        // guides={false}
+                        crop={this.crop} />
+                    <FormControl
+                        type="file"
+                        onChange={this.onChangeFile}
+                        name="file"
+                    />
                 </FormGroup>
 
                 <FormGroup validationState={ this.getValidationState('rubric') }>

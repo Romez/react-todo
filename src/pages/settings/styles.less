@@ -10,8 +10,9 @@
   .groupWrapper{
     margin-bottom: 20px;
   }
-  .imagePreview{
-    max-height: 200px;
+  .preview{
+    width: 100%;
+    max-width: inherit;
   }
 
   .AvatarCropper-canvas{
@@ -21,15 +22,4 @@
     }
   }
 
-  .dropzone{
-    box-sizing: border-box;
-    border: 2px dashed black;
-    min-height: 200px;
-    background: url(/img/upload.png) center center no-repeat;
-    cursor: pointer;
-    transition: .5s;
-    &:hover{
-      background-color: rgba(0, 0, 0, .3);
-    }
-  }
 }

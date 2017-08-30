@@ -6,10 +6,10 @@ import {ArticlePage} from '../articles';
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const SKIP_ERROR = 'SKIP_ERROR';
 
-export function addArticle(rubric, body, title, created_at, imagePreviewUrl, history) {
+export function addArticle(rubric, body, title, created_at, preview, history) {
     return dispatch => {
         return Axios.post('http://localhost:9088/articles/add', {
-            rubric, title, body, created_at, imagePreviewUrl
+            rubric, title, body, created_at, preview
         }).then(res => {
             history.push(`${ArticlePage.path}/${res.data.article.insertId}`);
         }).catch(error => {

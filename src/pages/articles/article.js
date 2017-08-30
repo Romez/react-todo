@@ -16,7 +16,6 @@ class ArticlePage extends React.Component {
 
     render() {
         const {title, body, created_at, preview} = this.props.article.article;
-        console.log( preview );
         const moment = unix(created_at);
         return (
             <section id="article">
