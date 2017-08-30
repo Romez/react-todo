@@ -13,7 +13,7 @@ class App extends React.Component {
     render() {
         return (
             <Grid bsClass="container-fluid">
-                <main>
+                <main id="main">
                     <Row>
                         <Header/>
                     </Row>

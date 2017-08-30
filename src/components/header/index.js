@@ -39,9 +39,7 @@ class Header extends React.Component {
         const settingsLink = (
             <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Настройки" id="settingsDropdown">
                 <LinkContainer exact={true} to={ ArticleAddPage.path }>
-                    <NavItem>
-                        Добавить статью
-                    </NavItem>
+                    <NavItem>Добавить статью</NavItem>
                 </LinkContainer>
             </NavDropdown>
         );

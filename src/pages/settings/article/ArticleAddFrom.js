@@ -136,7 +136,6 @@ class ArticleAddForm extends React.Component {
                 <FormGroup validationState={ this.getValidationState('body') }>
                     <ControlLabel>Статья</ControlLabel>
                     <TinyMCE
-                        apiKey="0mm27xdqdxttv00qjx3rxv23htjstfaacfxkwmppp68e4d25"
                         name="body"
                         content={this.state.body}
                         config={{
