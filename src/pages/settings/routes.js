@@ -10,7 +10,7 @@ class SettingsRoutes extends React.Component {
             <div>
                 <Switch>
                     <Route exact path={SettingsPage.path} component={SettingsPage}/>
-                    <Route path={ArticleAddPage.path} component={ArticleAddPage}/>
+                    <Route exact path={ArticleAddPage.path} component={ArticleAddPage}/>
                 </Switch>
             </div>
         );

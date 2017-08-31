@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classname from 'classnames';
 import {ArticleAddPage} from './article';
 import SettingsPage from './SettingsPage';
+import {AddRubricPage, DeleteRubricPage} from '../rubrics';
 
 class SettingsSidebar extends React.Component {
     render() {
@@ -16,8 +17,17 @@ class SettingsSidebar extends React.Component {
             <div id="settingsSidebar">
                 <Link className="title" to={SettingsPage.path}>Настройки</Link>
                 <div className={itemClasses}>
+                    <Link to={AddRubricPage.path}>Добавить рубрику</Link>
+                </div>
+
+                <div className={itemClasses}>
+                    <Link to={DeleteRubricPage.path}>Удалить рубрику</Link>
+                </div>
+
+                <div className={itemClasses}>
                     <Link to={ArticleAddPage.path}>Добавить статью</Link>
                 </div>
+
             </div>
         );
     }

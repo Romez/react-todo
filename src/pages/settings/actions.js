@@ -34,5 +34,3 @@ export function skipErrors(name) {
         });
     };
 }
-
-

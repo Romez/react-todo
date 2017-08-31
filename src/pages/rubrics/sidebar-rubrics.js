@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {getRubricsList, getRubric, getRubricArticles} from './actions';
-import RubricsPage from './rubrics';
+import RubricsPage from './RubricsPage';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import classNames from 'classnames';
