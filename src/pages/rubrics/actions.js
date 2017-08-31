@@ -16,6 +16,24 @@ export function skipError(name) {
     };
 }
 
+export function addRubric(data, history) {
+    return dispatch => {
+        return Axios.put('http://localhost:9088/rubric/add', data).then(res => {
+
+        }).catch(error => {
+            if (error.response.status === 403) {
+                history.push(LoginPage.path);
+            } else if (error.response.status === 400) {
+                const {errors} = error.response.data;
+                dispatch({
+                    type: ADD_RUBRIC,
+                    errors
+                });
+            }
+        });
+    };
+}
+
 export function editRubric(data, history) {
     return dispatch => {
         return Axios.post('http://localhost:9088/rubric/edit', data).then(res => {
