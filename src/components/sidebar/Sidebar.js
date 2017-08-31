@@ -21,7 +21,7 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
     auth: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

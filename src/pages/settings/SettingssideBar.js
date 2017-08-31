@@ -9,22 +9,18 @@ import {AddRubricPage, DeleteRubricPage} from '../rubrics';
 
 class SettingsSidebar extends React.Component {
     render() {
-        const itemClasses = classname('item', {
-            active: ArticleAddPage.path === this.props.location.pathname
-        });
-
         return (
             <div id="settingsSidebar">
                 <Link className="title" to={SettingsPage.path}>Настройки</Link>
-                <div className={itemClasses}>
+                <div className={classname('item', {active: AddRubricPage.path === this.props.location.pathname})}>
                     <Link to={AddRubricPage.path}>Добавить рубрику</Link>
                 </div>
 
-                <div className={itemClasses}>
+                <div className={classname('item', {active: DeleteRubricPage.path === this.props.location.pathname})}>
                     <Link to={DeleteRubricPage.path}>Удалить рубрику</Link>
                 </div>
 
-                <div className={itemClasses}>
+                <div className={classname('item', {active: ArticleAddPage.path === this.props.location.pathname})}>
                     <Link to={ArticleAddPage.path}>Добавить статью</Link>
                 </div>
 
