@@ -15,7 +15,7 @@ class ArticlePage extends React.Component {
     }
 
     render() {
-        const {title, body, created_at, preview} = this.props.article.article;
+        const {title, body, created_at} = this.props.article.article;
         const moment = unix(created_at);
         return (
             <section id="article">
@@ -26,7 +26,6 @@ class ArticlePage extends React.Component {
                     {moment.format('D.MM.gggg')}
                 </time>
                 <article>
-                    <img className="preview" src={preview} alt="фото"/>
                     {renderHTML(String(body))}
                 </article>
 
@@ -38,12 +37,14 @@ class ArticlePage extends React.Component {
 ArticlePage.propTypes = {
     match: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
-    article: PropTypes.object.isRequired
+    article: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        article: state.article
+        article: state.article,
+        auth: state.auth
     };
 }
 

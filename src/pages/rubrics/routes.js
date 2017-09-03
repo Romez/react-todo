@@ -15,8 +15,8 @@ class RubricRoutes extends React.Component {
                     <Route exact path={RubricsPage.path} component={RubricsPage}/>
                     <Route exact path={DeleteRubricPage.path} component={DeleteRubricPage}/>
                     <Route exact path={AddRubricPage.path} component={AddRubricPage}/>
-                    <Route exact path={EditRubricPage.path} component={EditRubricPage}/>
-                    <Route path={RubricPage.path} component={RubricPage}/>
+                    <Route path={EditRubricPage.path + '/:slug'} component={EditRubricPage}/>
+                    <Route exact path={RubricPage.path} component={RubricPage}/>
                 </Switch>
             </div>
         );

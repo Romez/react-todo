@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -17,13 +18,16 @@ class RubricsPage extends React.Component {
                                 {item.name}
                             </Link>
                         </li>
-
                     ))}
                 </ul>
             </div>
         );
     }
 }
+
+RubricsPage.propTypes = {
+    rubrics: PropTypes.object.isRequired
+};
 
 function mapStateToProps(state) {
     return {

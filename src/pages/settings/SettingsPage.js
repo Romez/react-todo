@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {ArticleAddPage} from './article';
+
 import './styles.less';
+import RubricsListPage from './RubricsListPage';
+import ArticlesListPage from './ArticlesListPage';
 
 class SettingsPage extends React.Component {
     static path = '/settings';
@@ -12,7 +14,22 @@ class SettingsPage extends React.Component {
                 <h2 className="title">
                     Настройки
                 </h2>
-                <Link to={ArticleAddPage.path}>Добавить статью</Link>
+
+                <ul>
+                    <li>
+                        <Link to={RubricsListPage.path}>
+                            Рубрики
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={ArticlesListPage.path}>
+                            Статьи
+                        </Link>
+                    </li>
+                </ul>
+
+
+
             </section>
         );
     }

@@ -45,4 +45,4 @@ App.propTypes = {
     children: PropTypes.any.isRequired
 };
 
-export default withRouter(connect(null)(App));
+export default App;

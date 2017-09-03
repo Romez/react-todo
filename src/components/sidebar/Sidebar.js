@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
         return (
             <div>
                 <SidebarRubrics />
-                {isAuth && <SettingsSidebar />}
+                {isAuth && <SettingsSidebar location={this.props.location} />}
             </div>
         );
     }

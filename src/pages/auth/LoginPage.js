@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
                         />
                     </FormGroup>
 
-                    <Button type={'summit'} bsStyle="primary" onClick={this.login.bind(this)}>
+                    <Button type="submit" bsStyle="primary" onClick={this.login.bind(this)}>
                         Войти
                     </Button>
                 </form>

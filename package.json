@@ -34,6 +34,7 @@
     "react-router-dom": "^4.2.0",
     "react-router-redux": "^4.0.8",
     "react-tinymce": "^0.6.0",
+    "react-tinymce-input": "^2.1.0",
     "react-tippy": "^1.2.1",
     "redux": "^3.7.2",
     "reset-css": "^2.2.1"

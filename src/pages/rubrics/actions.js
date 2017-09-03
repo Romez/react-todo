@@ -7,6 +7,22 @@ export const ADD_RUBRIC = 'ADD_RUBRIC';
 export const EDIT_RUBRIC = 'EDIT_RUBRIC';
 export const SKIP_ERROR = 'SKIP_ERROR';
 
+export function getRubricsList(history) {
+    return dispatch => {
+        return Axios.get('http://localhost:9088/rubrics').then(res => {
+            dispatch({
+                type: GET_RUBRICS_LIST,
+                rubrics: res.data.rubrics
+            });
+        }).catch(error => {
+            if (error.response.status === 403) {
+                history.push(LoginPage.path);
+            }
+        });
+    };
+}
+
+
 export function skipError(name) {
     return dispatch => {
         dispatch({
@@ -93,17 +109,4 @@ export function getRubricArticles(slug, history) {
     };
 }
 
-export function getRubricsList(history) {
-    return dispatch => {
-        return Axios.get('http://localhost:9088/rubrics').then(res => {
-            dispatch({
-                type: GET_RUBRICS_LIST,
-                rubrics: res.data.rubrics
-            });
-        }).catch(error => {
-            if (error.response.status === 403) {
-                history.push(LoginPage.path);
-            }
-        });
-    };
-}
+

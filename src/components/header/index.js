@@ -8,14 +8,21 @@ import { LoginPage, ContactsPage, HomePage, ArticleAddPage, RubricsPage } from '
 import {logout} from '../../pages/auth/actions';
 import {getRubric, getRubricArticles} from '../../pages/rubrics/actions';
 import {store} from '../../index';
+import {bindAll} from 'lodash';
 
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+        bindAll(this, ['logout', 'changeRubric']);
+    }
+
     logout(e) {
         e.preventDefault();
         this.props.logout();
     }
 
     changeRubric(e) {
+        e.preventDefault();
         const {slug} = e.target.dataset;
         store.dispatch(getRubric(slug));
         store.dispatch(getRubricArticles(slug));
@@ -28,7 +35,7 @@ class Header extends React.Component {
         const userLinks = (
             <NavItem
                 href="#"
-                onClick={this.logout.bind(this)}
+                onClick={this.logout}
             >Выйти ({user.username})</NavItem>
         );
         const guestLinks = (
@@ -56,9 +63,7 @@ class Header extends React.Component {
                     <Navbar.Collapse>
                         <Nav pullRight>
                             <LinkContainer exact={true} to={ HomePage.path }>
-                                <NavItem>
-                                    Главная
-                                </NavItem>
+                                <NavItem>Главная</NavItem>
                             </LinkContainer>
 
                             <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Рубрики" id="rubricsDropdown">
@@ -66,7 +71,7 @@ class Header extends React.Component {
                                     <LinkContainer
                                         key={i}
                                         to={`${RubricsPage.path}/${item.slug}`}
-                                        onClick={this.changeRubric.bind(this)}
+                                        onClick={this.changeRubric}
                                         data-slug={item.slug}
                                     >
                                         <NavItem>
@@ -74,19 +79,15 @@ class Header extends React.Component {
                                         </NavItem>
                                     </LinkContainer>
                                 ))}
-
                             </NavDropdown>
 
                             <LinkContainer to={ ContactsPage.path }>
-                                <NavItem >
-                                    Контакты
-                                </NavItem>
+                                <NavItem>Контакты</NavItem>
                             </LinkContainer>
 
                             {isAuth && settingsLink}
 
                             {isAuth ? userLinks : guestLinks}
-
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

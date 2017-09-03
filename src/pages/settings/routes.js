@@ -1,7 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import SettingsPage from './SettingsPage';
-import {ArticleAddPage} from './article';
+import RubricsListPage from './RubricsListPage';
+import ArticlesListPage from './ArticlesListPage';
 
 class SettingsRoutes extends React.Component {
     static path = '/settings';
@@ -10,7 +11,8 @@ class SettingsRoutes extends React.Component {
             <div>
                 <Switch>
                     <Route exact path={SettingsPage.path} component={SettingsPage}/>
-                    <Route exact path={ArticleAddPage.path} component={ArticleAddPage}/>
+                    <Route exact path={RubricsListPage.path} component={RubricsListPage}/>
+                    <Route exact path={ArticlesListPage.path} component={ArticlesListPage}/>
                 </Switch>
             </div>
         );

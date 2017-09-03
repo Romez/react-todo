@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom';
 import {unix} from 'moment';
 import ReactPaginate from 'react-paginate';
 import {getRubric, getRubricArticles} from './actions';
-import ArticlePage from '../articles/article';
-import _ from 'lodash';
+import ArticlePage from '../articles/ArticlePage';
+import {slice, isEmpty} from 'lodash';
 
 class RubricPage extends React.Component {
     static path = '/rubrics/:slug';
@@ -46,17 +46,17 @@ class RubricPage extends React.Component {
 
     render() {
         const {rubric, rubricArticles} = this.props.rubrics;
-        const rubrics = _.slice(rubricArticles, this.state.offset, this.state.offset + 8);
+        const rubrics = slice(rubricArticles, this.state.offset, this.state.offset + 8);
         return (
             <div>
                 <h2 className="rubricName">Рубрика {rubric.name}</h2>
                 <div className="articles">
                     {rubrics.map(this.renderArticle.bind(this))}
 
-                    <ReactPaginate
+                    {isEmpty(rubrics) ? 'Ничего не найдено' : <ReactPaginate
                         previousLabel="&lt;"
                         nextLabel="&gt;"
-                        breakLabel={<a onClick={() => { return;}}>...</a>}
+                        breakLabel={<a onClick={() => { return false; }}>...</a>}
                         pageCount={rubricArticles.length / 8}
                         marginPagesDisplayed={1}
                         pageRangeDisplayed={2}
@@ -64,8 +64,7 @@ class RubricPage extends React.Component {
                         containerClassName="pagination"
                         subContainerClassName="pages pagination"
                         activeClassName="active"
-                    />
-
+                    />}
                 </div>
             </div>
         );

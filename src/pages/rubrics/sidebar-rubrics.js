@@ -54,7 +54,6 @@ SidebarRubrics.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        auth: state.auth,
         rubrics: state.rubrics
     };
 }
