@@ -2,7 +2,6 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import RubricsPage from './RubricsPage';
 import RubricPage from './RubricPage';
-import DeleteRubricPage from './DeleteRubricPage';
 import AddRubricPage from './AddRubricPage';
 import EditRubricPage from './EditRubricPage';
 
@@ -13,7 +12,6 @@ class RubricRoutes extends React.Component {
             <div>
                 <Switch>
                     <Route exact path={RubricsPage.path} component={RubricsPage}/>
-                    <Route exact path={DeleteRubricPage.path} component={DeleteRubricPage}/>
                     <Route exact path={AddRubricPage.path} component={AddRubricPage}/>
                     <Route path={EditRubricPage.path + '/:slug'} component={EditRubricPage}/>
                     <Route exact path={RubricPage.path} component={RubricPage}/>

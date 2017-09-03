@@ -38,6 +38,11 @@ class ArticleEditPage extends React.Component {
 
     componentWillMount() {
         const {match, dispatch, history} = this.props;
+
+        if (!this.props.auth.isAuth) {
+            this.props.history.push(LoginPage.path);
+        }
+
         dispatch(getArticle(match.params.id, history)).then(() => {
             const {article} = this.props.article;
             this.setState({
@@ -75,13 +80,15 @@ ArticleEditPage.propTypes = {
     match: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    rubrics: PropTypes.object.isRequired
+    rubrics: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
         article: state.article,
-        rubrics: state.rubrics
+        rubrics: state.rubrics,
+        auth: state.auth
     };
 }
 

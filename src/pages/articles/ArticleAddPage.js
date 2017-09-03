@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import {addArticle} from './actions';
 import ArticleForm from './ArticleForm';
+import {LoginPage} from '../auth';
 
 class ArticleAddPage extends React.Component {
     static path='/article/add';
@@ -20,6 +21,12 @@ class ArticleAddPage extends React.Component {
             title: '',
             body: ''
         };
+    }
+
+    componentWillMount() {
+        if (!this.props.auth.isAuth) {
+            this.props.history.push(LoginPage.path);
+        }
     }
 
     onTinyMCEChange(value) {
@@ -58,16 +65,18 @@ class ArticleAddPage extends React.Component {
 
 ArticleAddPage.propTypes = {
     article: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    rubrics: PropTypes.object.isRequired
+    rubrics: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
         article: state.article,
-        rubrics: state.rubrics
+        rubrics: state.rubrics,
+        auth: state.auth
     };
 }
 

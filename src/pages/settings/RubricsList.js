@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
 import {deleteRubric, getRubricsList} from '../rubrics/actions';
-import {EditRubricPage, RubricsPage, DeleteRubricPage} from '../rubrics';
+import {EditRubricPage, RubricsPage} from '../rubrics';
 
 class RubricsList extends React.Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class RubricsList extends React.Component {
                     <Link to={`${EditRubricPage.path}/${item.slug}`}>
                         <FontAwesome name="pencil"/>
                     </Link>
-                    <Link  to={`${DeleteRubricPage.path}/${item.id}`}>
+                    <Link  to={`delete/${item.id}`}>
                         <FontAwesome data-slug={item.slug} onClick={this.delRubric} name="trash"/>
                     </Link>
                 </td>

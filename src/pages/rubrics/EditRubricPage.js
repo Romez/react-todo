@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
-import PropTypes from 'prop-types';
-import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
+
 import {isEmpty} from 'lodash';
+import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
 import {getRubric, editRubric, getRubricsList, skipError} from './actions';
+import {LoginPage} from '../auth';
 
 class EditRubricPage extends React.Component {
     static path = '/rubrics/edit';
@@ -21,7 +23,12 @@ class EditRubricPage extends React.Component {
     }
 
     componentWillMount() {
-        const {match, history} = this.props;
+        const {match, history, auth} = this.props;
+
+        if (!auth.isAuth) {
+            history.push(LoginPage.path);
+        }
+
         this.props.dispatch(getRubric(match.params.slug, history)).then( () => {
             this.setState({
                 id: this.props.rubrics.rubric.id,
@@ -94,6 +101,7 @@ class EditRubricPage extends React.Component {
 }
 
 EditRubricPage.propTypes = {
+    auth: PropTypes.object.isRequired,
     rubrics: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -102,7 +110,8 @@ EditRubricPage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        rubrics: state.rubrics
+        rubrics: state.rubrics,
+        auth: state.auth
     };
 }
 

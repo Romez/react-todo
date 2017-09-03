@@ -1,12 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import './styles.less';
+
+import {LoginPage} from '../auth';
 import RubricsListPage from './RubricsListPage';
 import ArticlesListPage from './ArticlesListPage';
 
+
 class SettingsPage extends React.Component {
     static path = '/settings';
+
+    componentWillMount() {
+        if (!this.props.auth.isAuth) {
+            this.props.history.push(LoginPage.path);
+        }
+    }
 
     render() {
         return (
@@ -27,12 +38,18 @@ class SettingsPage extends React.Component {
                         </Link>
                     </li>
                 </ul>
-
-
-
             </section>
         );
     }
 }
 
-export default SettingsPage;
+SettingsPage.propTypes = {
+    auth: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+    return {auth: state.auth};
+}
+
+export default connect(mapStateToProps)(SettingsPage);

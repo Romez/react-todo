@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import config from '../../config';
 
 export const GET_RUBRIC = 'GET_RUBRIC';
 export const GET_RUBRICS_LIST = 'GET_RUBRICS_LIST';
@@ -9,7 +10,7 @@ export const SKIP_ERROR = 'SKIP_ERROR';
 
 export function getRubricsList(history) {
     return dispatch => {
-        return Axios.get('http://localhost:9088/rubrics').then(res => {
+        return Axios.get(`${config.serverUrl}/rubrics`).then(res => {
             dispatch({
                 type: GET_RUBRICS_LIST,
                 rubrics: res.data.rubrics
@@ -34,7 +35,7 @@ export function skipError(name) {
 
 export function addRubric(data, history) {
     return dispatch => {
-        return Axios.put('http://localhost:9088/rubric/add', data).then(res => {
+        return Axios.put(`${config.serverUrl}/rubric/add`, data).then(res => {
 
         }).catch(error => {
             if (error.response.status === 403) {
@@ -52,7 +53,7 @@ export function addRubric(data, history) {
 
 export function editRubric(data, history) {
     return dispatch => {
-        return Axios.post('http://localhost:9088/rubric/edit', data).then(res => {
+        return Axios.post(`${config.serverUrl}/rubric/edit`, data).then(res => {
 
         }).catch(error => {
             if (error.response.status === 403) {
@@ -70,7 +71,7 @@ export function editRubric(data, history) {
 
 export function deleteRubric(slug) {
     return dispatch => {
-        return Axios.delete(`http://localhost:9088/rubric/${slug}`).then(res => {
+        return Axios.delete(`${config.serverUrl}/rubric/${slug}`).then(res => {
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
@@ -81,7 +82,7 @@ export function deleteRubric(slug) {
 
 export function getRubric(slug, history) {
     return dispatch => {
-        return Axios.get(`http://localhost:9088/rubrics/${slug}`).then(res => {
+        return Axios.get(`${config.serverUrl}/rubrics/${slug}`).then(res => {
             dispatch({
                 type: GET_RUBRIC,
                 rubric: res.data.rubric
@@ -96,7 +97,7 @@ export function getRubric(slug, history) {
 
 export function getRubricArticles(slug, history) {
     return dispatch => {
-        return Axios.get(`http://localhost:9088/rubric-articles/${slug}`).then(res => {
+        return Axios.get(`${config.serverUrl}/rubric-articles/${slug}`).then(res => {
             dispatch({
                 type: GET_RUBRIC_ARTICLES,
                 rubricArticles: res.data.rubricArticles

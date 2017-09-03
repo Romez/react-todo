@@ -1,9 +1,12 @@
-export const LOGIN = 'LOGIN';
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+
 import LS from '../../utils/localstorage';
 import {setAuthToken} from '../../utils';
-import jwt from 'jsonwebtoken';
+import config from '../../config';
+
+const LOGIN = 'LOGIN';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export function setCurrentUser(user) {
     return {
@@ -29,7 +32,7 @@ export function login(username, password, history) {
     }
 
     return dispatch => {
-        return axios.post('http://localhost:9088/users/auth', {username, password}).then(res => {
+        return axios.post(`${config.serverUrl}/users/auth`, {username, password}).then(res => {
             const token = res.data.token;
             LS.set('token', token);
             setAuthToken(token);

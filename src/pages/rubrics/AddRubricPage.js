@@ -1,9 +1,11 @@
 import React from 'react';
-import {bindAll} from 'lodash';
-import {connect} from 'react-redux';
-import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {bindAll} from 'lodash';
+
 import {addRubric, getRubricsList} from './actions';
+import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
+import {LoginPage} from '../auth';
 
 class AddRubricPage extends React.Component {
     static path = '/rubrics/add';
@@ -15,6 +17,12 @@ class AddRubricPage extends React.Component {
             name: '',
             slug: ''
         };
+    }
+
+    componentWillMount() {
+        if (!this.props.auth.isAuth) {
+            this.props.history.push(LoginPage.path);
+        }
     }
 
     onChange(e) {
@@ -82,6 +90,7 @@ class AddRubricPage extends React.Component {
 }
 
 AddRubricPage.propTypes = {
+    auth: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     rubrics: PropTypes.object.isRequired
@@ -89,7 +98,8 @@ AddRubricPage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        rubrics: state.rubrics
+        rubrics: state.rubrics,
+        auth: state.auth
     };
 }
 
