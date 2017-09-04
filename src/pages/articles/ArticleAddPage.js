@@ -8,6 +8,7 @@ import {addArticle, skipErrors} from './actions';
 import {addFlashMessage} from '../../components/flash/actions';
 import ArticleForm from './ArticleForm';
 import {LoginPage} from '../auth';
+import {ArticlesListPage} from '../settings';
 
 class ArticleAddPage extends React.Component {
     static path='/article/add';
@@ -46,6 +47,7 @@ class ArticleAddPage extends React.Component {
         this.props.dispatch(addArticle({title, body, createdAt, rubric}, this.props.history)).then(()=>{
             if (isEmpty(this.props.article.errors)) {
                 this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья добавлена'}));
+                this.props.history.push(ArticlesListPage.path);
             }
         });
     }

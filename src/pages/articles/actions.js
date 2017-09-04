@@ -44,7 +44,6 @@ export function getArticle(id) {
 export function addArticle(data, history) {
     return dispatch => {
         return Axios.post(`${config.serverUrl}/articles/add`, data).then(res => {
-            history.push(`${ArticlePage.path}/${res.data.article.insertId}`);
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
@@ -62,7 +61,6 @@ export function addArticle(data, history) {
 export function editArticle(data, history) {
     return dispatch => {
         return Axios.post(`${config.serverUrl}/article/edit`, data).then(res => {
-
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);

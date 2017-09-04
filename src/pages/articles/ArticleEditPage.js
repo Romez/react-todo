@@ -6,6 +6,7 @@ import {bindAll} from 'lodash';
 import {getArticle, editArticle} from './actions';
 import {addFlashMessage} from '../../components/flash/actions';
 import ArticleForm from './ArticleForm';
+import {ArticlesListPage} from '../settings';
 
 class ArticleEditPage extends React.Component {
     static path='/article/edit';
@@ -37,8 +38,9 @@ class ArticleEditPage extends React.Component {
         this.setState({btnDisable: true});
         const {title, body, id, createdAt, rubric} = this.state;
         this.props.dispatch(editArticle({title, body, id, createdAt, rubric}, this.props.history)).then(()=>{
-            this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья изменена'}));
             this.setState({btnDisable: false});
+            this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья изменена'}));
+            this.props.history.push(ArticlesListPage.path);
         });
     }
 
