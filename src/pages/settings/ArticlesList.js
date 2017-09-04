@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import {bindAll, slice, isEmpty} from 'lodash';
 import {Link} from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import {unix} from 'moment';
 
 import {ArticlePage, ArticleEditPage} from '../articles';
 import {deleteArticle, getAllArticles} from '../articles/actions';
@@ -40,7 +41,7 @@ class ArticlesList extends React.Component {
                 <td>{item.article_id}</td>
                 <td>{item.rubric}</td>
                 <td>{item.title}</td>
-                <td>{item.created_at}</td>
+                <td>{unix(item.created_at).format('D.MM.gggg')}</td>
                 <td>
                     <Link to={`${ArticlePage.path}/${item.article_id}`}>
                         <FontAwesome name="eye"/>

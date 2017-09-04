@@ -24,18 +24,20 @@ class HomePage extends React.Component {
 
                     <ul>
                         <li>
-                            <a href="https://github.com/Romez/react-tasks.git">Frontend</a>
+                            <a target="_block" href="https://github.com/Romez/react-tasks.git">Frontend</a>
                         </li>
                         <li>
-                            <a href="https://github.com/Romez/tasks.server.git">Backend</a>
+                            <a target="_block" href="https://github.com/Romez/tasks.server.git">Backend</a>
                         </li>
                     </ul>
 
                     <p>
                         {!auth.isAuth && <LinkContainer to={LoginPage.path}>
-                            <Button bsStyle="primary">Войти</Button>
-                        </LinkContainer>
-                        }
+                            <div>
+                                <div>Логин: admin Пароль: admin</div>
+                                <Button bsStyle="primary">Войти</Button>
+                            </div>
+                        </LinkContainer>}
                     </p>
                 </Jumbotron>
             </section>
