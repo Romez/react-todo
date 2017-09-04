@@ -1,4 +1,4 @@
-import {GET_ARTICLE, ADD_ARTICLE, GET_ALL_ARTICLES} from './actions';
+import {GET_ARTICLE, ADD_ARTICLE, GET_ALL_ARTICLES, SKIP_ERRORS} from './actions';
 
 const initialState = {
     articles: [],
@@ -21,7 +21,16 @@ function articleReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 errors: action.errors
             });
+        case SKIP_ERRORS:
+            let {errors} = state;
 
+            if (action.name) {
+                delete errors[action.name];
+            } else {
+                errors = [];
+            }
+
+            return Object.assign({}, state, {errors});
         default:
             return state;
     }

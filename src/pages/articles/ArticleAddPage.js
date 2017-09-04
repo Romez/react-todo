@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindAll} from 'lodash';
+import {bindAll, isEmpty} from 'lodash';
 import moment from 'moment';
 
-import {addArticle} from './actions';
+import {addArticle, skipErrors} from './actions';
 import {addFlashMessage} from '../../components/flash/actions';
 import ArticleForm from './ArticleForm';
 import {LoginPage} from '../auth';
@@ -31,10 +31,12 @@ class ArticleAddPage extends React.Component {
     }
 
     onTinyMCEChange(value) {
+        this.props.dispatch(skipErrors('body'));
         this.setState({body: value});
     }
 
     onChange(name, value) {
+        this.props.dispatch(skipErrors(name));
         this.setState({[name]: value});
     }
 
@@ -42,7 +44,9 @@ class ArticleAddPage extends React.Component {
         const {title, body, rubric} = this.state;
         const createdAt = moment().unix();
         this.props.dispatch(addArticle({title, body, createdAt, rubric}, this.props.history)).then(()=>{
-            this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья добавлена'}));
+            if (isEmpty(this.props.article.errors)) {
+                this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья добавлена'}));
+            }
         });
     }
 

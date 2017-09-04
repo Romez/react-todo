@@ -9,6 +9,7 @@ export const GET_ARTICLE = 'GET_ARTICLE';
 export const EDIT_ARTICLE = 'EDIT_ARTICLE';
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+export const SKIP_ERRORS = 'SKIP_ERRORS';
 
 export function getAllArticles(history) {
     return dispatch => {
@@ -78,11 +79,19 @@ export function editArticle(data, history) {
 export function deleteArticle(id, history) {
     return dispatch => {
         return Axios.delete(`${config.serverUrl}/article/${id}`).then(res => {
-            //todo flash message
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
             }
+        });
+    };
+}
+
+export function skipErrors(name = null) {
+    return dispatch => {
+        dispatch({
+            type: SKIP_ERRORS,
+            name
         });
     };
 }

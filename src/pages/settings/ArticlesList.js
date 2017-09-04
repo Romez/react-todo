@@ -8,6 +8,7 @@ import FontAwesome from 'react-fontawesome';
 
 import {ArticlePage, ArticleEditPage} from '../articles';
 import {deleteArticle, getAllArticles} from '../articles/actions';
+import {addFlashMessage} from '../../components/flash/actions';
 
 class ArticlesList extends React.Component {
     constructor(props) {
@@ -25,7 +26,10 @@ class ArticlesList extends React.Component {
         if (id) {
             const {history, dispatch} = this.props;
             dispatch(deleteArticle(id, history)).then(() => {
-                dispatch(getAllArticles(history));
+                if (isEmpty(this.props.article.errors)) {
+                    dispatch(addFlashMessage({type: 'success', text: 'Статья удалена'}));
+                    dispatch(getAllArticles(history));
+                }
             });
         }
     }
