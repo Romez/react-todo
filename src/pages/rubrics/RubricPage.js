@@ -59,7 +59,6 @@ class RubricPage extends React.Component {
                     {this.state.loading && 'Loading...'}
 
                     {rubrics.map(this.renderArticle.bind(this))}
-                    s
                     {isEmpty(rubrics) ? 'Ничего не найдено' : <ReactPaginate
                         previousLabel="&lt;"
                         nextLabel="&gt;"
