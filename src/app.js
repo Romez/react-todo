@@ -18,18 +18,16 @@ class App extends React.Component {
                         <Header/>
                     </Row>
 
-                    <Grid bsClass="container content">
-                        <Row>
-                            <section>
-                                <Col xsHidden xs={12} sm={3} md={3} id="sidebar">
-                                    <Sidebar/>
-                                </Col>
-                                <Col xs={12} sm={9} md={9} id="mainSection">
-                                    { this.props.children }
-                                </Col>
-                            </section>
-                        </Row>
-                    </Grid>
+                    <Row className="content">
+                        <section>
+                            <Col xsHidden xs={12} sm={3} md={3} id="sidebar">
+                                <Sidebar/>
+                            </Col>
+                            <Col xs={12} sm={9} md={9} id="mainSection">
+                                { this.props.children }
+                            </Col>
+                        </section>
+                    </Row>
 
                     <Row>
                         <Footer />

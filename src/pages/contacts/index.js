@@ -1,2 +1,2 @@
-export ContactsPage from './contacts';
+export ContactsPage from './ContactsPage';
 export ContactsRoute from './routes';

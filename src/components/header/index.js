@@ -1,19 +1,23 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { LoginPage, ContactsPage, HomePage, ArticleAddPage, RubricsPage } from '../../pages';
+import {Link, withRouter} from 'react-router-dom';
+import {LinkContainer} from 'react-router-bootstrap';
+import {bindAll} from 'lodash';
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+
+import {store} from '../../index';
+
+import {LoginPage, ContactsPage, HomePage, RubricsPage} from '../../pages';
 import {logout} from '../../pages/auth/actions';
 import {getRubric, getRubricArticles} from '../../pages/rubrics/actions';
-import {store} from '../../index';
-import {bindAll} from 'lodash';
+import {RubricsListPage, ArticlesListPage} from '../../pages/settings';
+
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ['logout', 'changeRubric']);
+        bindAll(this, ['logout', 'changeRubric', 'renderRubrics']);
     }
 
     logout(e) {
@@ -22,16 +26,29 @@ class Header extends React.Component {
     }
 
     changeRubric(e) {
-        e.preventDefault();
         const {slug} = e.target.dataset;
         store.dispatch(getRubric(slug));
         store.dispatch(getRubricArticles(slug));
     }
 
+    renderRubrics(item, i) {
+        return (
+            <LinkContainer
+                key={i}
+                to={`${RubricsPage.path}/${item.slug}`}
+                onClick={this.changeRubric}
+                data-slug={item.slug}
+            >
+                <NavItem>
+                    {item.name}
+                </NavItem>
+            </LinkContainer>
+        );
+    }
+
     render() {
         const { isAuth, user } = this.props.auth;
         const { rubrics } = this.props.rubrics;
-
         const userLinks = (
             <NavItem
                 href="#"
@@ -45,8 +62,12 @@ class Header extends React.Component {
         );
         const settingsLink = (
             <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Настройки" id="settingsDropdown">
-                <LinkContainer exact={true} to={ ArticleAddPage.path }>
-                    <NavItem>Добавить статью</NavItem>
+                <LinkContainer to={RubricsListPage.path}>
+                    <NavItem>Рубрики</NavItem>
+                </LinkContainer>
+
+                <LinkContainer to={ArticlesListPage.path}>
+                    <NavItem>Статьи</NavItem>
                 </LinkContainer>
             </NavDropdown>
         );
@@ -67,18 +88,7 @@ class Header extends React.Component {
                             </LinkContainer>
 
                             <NavDropdown className="hidden-lg hidden-md hidden-sm" title="Рубрики" id="rubricsDropdown">
-                                {rubrics.map( (item, i) => (
-                                    <LinkContainer
-                                        key={i}
-                                        to={`${RubricsPage.path}/${item.slug}`}
-                                        onClick={this.changeRubric}
-                                        data-slug={item.slug}
-                                    >
-                                        <NavItem>
-                                            {item.name}
-                                        </NavItem>
-                                    </LinkContainer>
-                                ))}
+                                {rubrics.map(this.renderRubrics)}
                             </NavDropdown>
 
                             <LinkContainer to={ ContactsPage.path }>
