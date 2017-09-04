@@ -36,7 +36,6 @@ export function skipError(name) {
 export function addRubric(data, history) {
     return dispatch => {
         return Axios.put(`${config.serverUrl}/rubric/add`, data).then(res => {
-
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);
@@ -54,7 +53,6 @@ export function addRubric(data, history) {
 export function editRubric(data, history) {
     return dispatch => {
         return Axios.post(`${config.serverUrl}/rubric/edit`, data).then(res => {
-
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);

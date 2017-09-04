@@ -8,6 +8,7 @@ import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-boo
 import {getRubric, editRubric, getRubricsList, skipError} from './actions';
 import {addFlashMessage} from '../../components/flash/actions';
 import {LoginPage} from '../auth';
+import {RubricsListPage} from '../settings';
 
 class EditRubricPage extends React.Component {
     static path = '/rubrics/edit';
@@ -50,8 +51,9 @@ class EditRubricPage extends React.Component {
         const {id, name, slug} = this.state;
         this.props.dispatch(editRubric({id, name, slug})).then(() => {
             if (isEmpty(this.props.rubrics.errors)) {
-                this.props.dispatch(getRubricsList(this.props.history));
                 this.props.dispatch(addFlashMessage({type: 'success', text: 'Рубрика изменена'}));
+                this.props.dispatch(getRubricsList(this.props.history));
+                this.props.history.push(RubricsListPage.path);
             }
         });
     }

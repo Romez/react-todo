@@ -7,6 +7,7 @@ import {addRubric, getRubricsList} from './actions';
 import {addFlashMessage} from '../../components/flash/actions';
 import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
 import {LoginPage} from '../auth';
+import {RubricsListPage} from '../settings';
 
 class AddRubricPage extends React.Component {
     static path = '/rubrics/add';
@@ -38,6 +39,7 @@ class AddRubricPage extends React.Component {
             this.setState({name: '', slug: ''});
             this.props.dispatch(getRubricsList(this.props.history));
             this.props.dispatch(addFlashMessage({type: 'success', 'text': 'Создана рубрика'}));
+            this.props.history.push(RubricsListPage.path);
         });
     }
 
