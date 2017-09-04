@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Panel} from 'react-bootstrap';
+import {Col, Panel, Image} from 'react-bootstrap';
 
 import './styles.less';
 
@@ -11,7 +11,7 @@ export default class ContactsPage extends React.Component {
             <section id="ContactsPage">
                 <Panel>
                     <Col xs={12} sm={6}>
-                        <img src="/img/code.jpg" alt="me"/>
+                        <Image src="/img/code.jpg" rounded/>
                     </Col>
                     <Col xs={12} sm={6}>
                         <p>Email: roman.ushakov.89@inbox.ru</p>
