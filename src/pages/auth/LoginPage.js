@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import {login} from './actions';
+import {addFlashMessage} from '../../components/flash/actions';
 import './login.less';
 
 class LoginPage extends React.Component {
@@ -27,7 +28,12 @@ class LoginPage extends React.Component {
     login(e) {
         e.preventDefault();
         const {username, password} = this.state;
-        this.props.dispatch( login(username, password, this.props.history) );
+        this.props.dispatch(login(username, password, this.props.history)).then(()=>{
+            this.props.dispatch(addFlashMessage({
+                type: 'success',
+                text: 'Вы успешно вошли'
+            }));
+        });
         this.props.history.push('/');
     }
 

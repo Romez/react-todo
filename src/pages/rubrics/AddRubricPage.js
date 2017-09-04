@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
 
 import {addRubric, getRubricsList} from './actions';
+import {addFlashMessage} from '../../components/flash/actions';
 import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
 import {LoginPage} from '../auth';
 
@@ -34,11 +35,9 @@ class AddRubricPage extends React.Component {
         e.preventDefault();
         const {name, slug} = this.state;
         this.props.dispatch(addRubric({name, slug}, this.props.history)).then(()=>{
+            this.setState({name: '', slug: ''});
             this.props.dispatch(getRubricsList(this.props.history));
-            this.setState({
-                name: '',
-                slug: ''
-            });
+            this.props.dispatch(addFlashMessage({type: 'success', 'text': 'Создана рубрика'}));
         });
     }
 

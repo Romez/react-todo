@@ -1,3 +1,3 @@
 export default {
-    serverUrl: 'http://localhost:9088'
+    serverUrl: 'http://ushakovs.ru:9088'
 };

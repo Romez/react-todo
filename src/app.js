@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 import {Row, Grid, Col} from 'react-bootstrap';
-import {Header, Footer, Sidebar} from './components';
+import {Header, Footer, Sidebar, FlashMessagesList} from './components';
 import {DevTools} from './utils';
 
 import 'reset-css';
@@ -19,14 +17,20 @@ class App extends React.Component {
                     </Row>
 
                     <Row className="content">
-                        <section>
-                            <Col xsHidden xs={12} sm={3} md={3} id="sidebar">
-                                <Sidebar/>
-                            </Col>
-                            <Col xs={12} sm={9} md={9} id="mainSection">
-                                { this.props.children }
-                            </Col>
-                        </section>
+                        <div className="container">
+                            <section>
+                                <Col xs={12}>
+                                    <FlashMessagesList />
+                                </Col>
+                                <Col xsHidden xs={12} sm={3} md={3} id="sidebar">
+                                    <Sidebar/>
+                                </Col>
+                                <Col xs={12} sm={9} md={9} id="mainSection">
+                                    { this.props.children }
+                                </Col>
+                            </section>
+                        </div>
+
                     </Row>
 
                     <Row>

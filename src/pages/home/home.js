@@ -12,9 +12,6 @@ class HomePage extends React.Component {
 
     render() {
         const {auth} = this.props;
-
-        console.log( auth.isAuth );
-
         return (
             <section id="HomePage">
                 <Jumbotron>
@@ -23,10 +20,16 @@ class HomePage extends React.Component {
                         редактировать и удалять рубрики и статьи. </p>
                     <p>Авторизация происходит по token. Приложение использует REST для связи с сервером.</p>
 
-                    <p>Код можно посмотреть здесь:
-                        <p><a href="https://github.com/Romez/react-tasks.git">Frontend</a></p>
-                        <p><a href="https://github.com/Romez/tasks.server.git">Backend</a></p>
-                    </p>
+                    <p>Код можно посмотреть здесь:</p>
+
+                    <ul>
+                        <li>
+                            <a href="https://github.com/Romez/react-tasks.git">Frontend</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Romez/tasks.server.git">Backend</a>
+                        </li>
+                    </ul>
 
                     <p>
                         {!auth.isAuth && <LinkContainer to={LoginPage.path}>

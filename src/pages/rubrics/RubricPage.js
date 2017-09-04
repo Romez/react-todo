@@ -14,14 +14,18 @@ class RubricPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            offset: 0
+            offset: 0,
+            loading: true
         };
     }
 
     componentWillMount() {
+        this.setState({loading: true});
         const {slug} = this.props.match.params;
         this.props.dispatch(getRubric(slug));
-        this.props.dispatch(getRubricArticles(slug));
+        this.props.dispatch(getRubricArticles(slug)).then(() => {
+            this.setState({loading: false});
+        });
     }
 
     renderArticle(item, i) {
@@ -51,9 +55,12 @@ class RubricPage extends React.Component {
             <div>
                 <h2 className="rubricName">Рубрика {rubric.name}</h2>
                 <div className="articles">
+
+                    {this.state.loading && 'Загрузка' }
+
                     {rubrics.map(this.renderArticle.bind(this))}
 
-                    {isEmpty(rubrics) ? 'Ничего не найдено' : <ReactPaginate
+                    {!isEmpty(rubrics) && <ReactPaginate
                         previousLabel="&lt;"
                         nextLabel="&gt;"
                         breakLabel={<a onClick={() => { return false; }}>...</a>}

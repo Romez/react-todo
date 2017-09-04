@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
 import {deleteRubric, getRubricsList} from '../rubrics/actions';
+import {addFlashMessage} from '../../components/flash/actions';
 import {EditRubricPage, RubricsPage} from '../rubrics';
 
 class RubricsList extends React.Component {
@@ -20,6 +21,7 @@ class RubricsList extends React.Component {
         if (slug) {
             this.props.dispatch(deleteRubric(slug)).then(() => {
                 this.props.dispatch(getRubricsList(this.props.history));
+                this.props.dispatch(addFlashMessage({type: 'success', text: 'Рубрика удалена'}));
             });
         }
     }

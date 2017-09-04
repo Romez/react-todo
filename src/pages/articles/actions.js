@@ -61,7 +61,7 @@ export function addArticle(data, history) {
 export function editArticle(data, history) {
     return dispatch => {
         return Axios.post(`${config.serverUrl}/article/edit`, data).then(res => {
-            history.push(`${ArticlePage.path}/${data.id}`);
+
         }).catch(error => {
             if (error.response.status === 403) {
                 history.push(LoginPage.path);

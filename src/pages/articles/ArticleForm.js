@@ -32,7 +32,7 @@ class ArticleForm extends React.Component {
     }
 
     render() {
-        const {title, body, rubrics, rubric} = this.props;
+        const {title, body, rubrics, rubric, btnDisable} = this.props;
 
         const rubricsList = rubrics.rubrics.map( (item, i) => (
             <option key={i} value={item.id}>{item.name}</option>
@@ -110,7 +110,7 @@ class ArticleForm extends React.Component {
                     </ControlLabel>
                 </FormGroup>
 
-                <Button onClick={this.onSubmit}>Подтвердить</Button>
+                <Button disabled={btnDisable} onClick={this.onSubmit}>Подтвердить</Button>
 
             </form>
         );
@@ -124,7 +124,12 @@ ArticleForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     onTinyMCEChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    rubrics: PropTypes.object.isRequired
+    rubrics: PropTypes.object.isRequired,
+    btnDisable: PropTypes.bool
+};
+
+ArticleForm.defaultProps = {
+    btnDisable: false
 };
 
 export default ArticleForm;

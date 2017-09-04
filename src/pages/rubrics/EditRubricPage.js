@@ -6,6 +6,7 @@ import {bindAll} from 'lodash';
 import {isEmpty} from 'lodash';
 import {FormGroup, ControlLabel, FormControl, Button, HelpBlock} from 'react-bootstrap';
 import {getRubric, editRubric, getRubricsList, skipError} from './actions';
+import {addFlashMessage} from '../../components/flash/actions';
 import {LoginPage} from '../auth';
 
 class EditRubricPage extends React.Component {
@@ -50,6 +51,7 @@ class EditRubricPage extends React.Component {
         this.props.dispatch(editRubric({id, name, slug})).then(() => {
             if (isEmpty(this.props.rubrics.errors)) {
                 this.props.dispatch(getRubricsList(this.props.history));
+                this.props.dispatch(addFlashMessage({type: 'success', text: 'Рубрика изменена'}));
             }
         });
     }
@@ -93,7 +95,7 @@ class EditRubricPage extends React.Component {
                         </ControlLabel>
                     </FormGroup>
 
-                    <Button bsStyle="primary" type={'submit'}>Добавить</Button>
+                    <Button bsStyle="primary" type={'submit'}>Сохранить</Button>
                 </form>
             </section>
         );

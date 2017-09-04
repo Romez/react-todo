@@ -5,6 +5,7 @@ import {bindAll} from 'lodash';
 import moment from 'moment';
 
 import {addArticle} from './actions';
+import {addFlashMessage} from '../../components/flash/actions';
 import ArticleForm from './ArticleForm';
 import {LoginPage} from '../auth';
 
@@ -40,7 +41,9 @@ class ArticleAddPage extends React.Component {
     onSubmit() {
         const {title, body, rubric} = this.state;
         const createdAt = moment().unix();
-        this.props.dispatch(addArticle({title, body, createdAt, rubric}, this.props.history));
+        this.props.dispatch(addArticle({title, body, createdAt, rubric}, this.props.history)).then(()=>{
+            this.props.dispatch(addFlashMessage({type: 'success', text: 'Статья добавлена'}));
+        });
     }
 
     render() {

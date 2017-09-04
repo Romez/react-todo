@@ -17,7 +17,7 @@ class ArticlesListPage extends React.Component {
         if (!auth.isAuth) {
             history.push(LoginPage.path);
         }
-        dispatch(getAllArticles());
+        dispatch(getAllArticles(history));
     }
 
     render() {
