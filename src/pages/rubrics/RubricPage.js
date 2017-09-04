@@ -15,7 +15,8 @@ class RubricPage extends React.Component {
         super(props);
         this.state = {
             offset: 0,
-            loading: true
+            perPage: 8,
+            loading: false
         };
     }
 
@@ -44,19 +45,18 @@ class RubricPage extends React.Component {
 
     handlePageClick(data) {
         const selected = data.selected;
-        const offset = Math.ceil(selected * 8);
+        const offset = Math.ceil(selected * this.state.perPage);
         this.setState({offset: offset});
     }
 
     render() {
         const {rubric, rubricArticles} = this.props.rubrics;
-        const rubrics = slice(rubricArticles, this.state.offset, this.state.offset + 8);
+        const rubrics = slice(rubricArticles, this.state.offset, this.state.offset + this.state.perPage);
         return (
             <div>
                 <h2 className="rubricName">Рубрика {rubric.name}</h2>
                 <div className="articles">
-
-                    {this.state.loading && 'Загрузка' }
+                    {this.state.loading && 'Loading...'}
 
                     {rubrics.map(this.renderArticle.bind(this))}
 
@@ -64,7 +64,7 @@ class RubricPage extends React.Component {
                         previousLabel="&lt;"
                         nextLabel="&gt;"
                         breakLabel={<a onClick={() => { return false; }}>...</a>}
-                        pageCount={rubricArticles.length / 8}
+                        pageCount={rubricArticles.length / this.state.perPage}
                         marginPagesDisplayed={1}
                         pageRangeDisplayed={2}
                         onPageChange={this.handlePageClick.bind(this)}

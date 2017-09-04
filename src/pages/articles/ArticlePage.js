@@ -9,26 +9,39 @@ import './styles.less';
 class ArticlePage extends React.Component {
     static path = '/article';
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false
+        };
+    }
+
     componentWillMount() {
+        this.setState({loading: true});
+
         const {id} = this.props.match.params;
-        this.props.dispatch(getArticle(id));
+        this.props.dispatch(getArticle(id)).then(() => this.setState({loading: false}));
     }
 
     render() {
         const {title, body, created_at} = this.props.article.article;
         const moment = unix(created_at);
+
         return (
             <section id="article">
-                <h2>
-                    {title}
-                </h2>
-                <time>
-                    {moment.format('D.MM.gggg')}
-                </time>
-                <article>
-                    {renderHTML(String(body))}
-                </article>
-
+                {this.state.loading ? 'loading...' :
+                    <div>
+                        <h2>
+                            {title}
+                        </h2>
+                        <time>
+                            {moment.format('D.MM.gggg')}
+                        </time>
+                        <article>
+                            {renderHTML(String(body))}
+                        </article>
+                    </div>
+                }
             </section>
         );
     }
