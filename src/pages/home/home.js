@@ -31,14 +31,13 @@ class HomePage extends React.Component {
                         </li>
                     </ul>
 
-                    <p>
-                        {!auth.isAuth && <LinkContainer to={LoginPage.path}>
-                            <div>
-                                <div>Логин: admin Пароль: admin</div>
-                                <Button bsStyle="primary">Войти</Button>
-                            </div>
-                        </LinkContainer>}
-                    </p>
+                    {!auth.isAuth && <LinkContainer to={LoginPage.path}>
+                        <p>
+                            <div>Логин: admin Пароль: admin</div>
+                            <Button bsStyle="primary">Войти</Button>
+                        </p>
+                    </LinkContainer>}
+
                 </Jumbotron>
             </section>
         );
