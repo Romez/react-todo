@@ -9,6 +9,11 @@ import classNames from 'classnames';
 import './styles.less';
 
 class SidebarRubrics extends React.Component {
+    constructor(props) {
+        super(props);
+        this.getRubric = this.getRubric.bind(this);
+    }
+
     componentWillMount() {
         this.props.dispatch(getRubricsList(this.props.history));
     }
@@ -26,7 +31,7 @@ class SidebarRubrics extends React.Component {
             <div className={linkClasses} key={i}>
                 {<Link
                     to={`${RubricsPage.path}/${item.slug}`}
-                    onClick={this.getRubric.bind(this)}
+                    onClick={this.getRubric}
                     data-slug={item.slug}
                 >{item.name}</Link>}
             </div>

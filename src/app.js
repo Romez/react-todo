@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Row, Grid, Col} from 'react-bootstrap';
-import {Header, Footer, Sidebar, FlashMessagesList} from './components';
+import {Header, Footer, Sidebar, FlashMessagesList, Chat} from './components';
 import {DevTools} from './utils';
 
 import 'reset-css';

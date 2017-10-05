@@ -8,7 +8,11 @@ import FlashMessage from './FlashMessage';
 class FlashMessagesList extends React.Component {
     render() {
         const messages = this.props.flashMessages.messages.map(message =>
-            <FlashMessage key={message.id} message={message} deleteFlashMessage={this.props.deleteFlashMessage} />
+            <FlashMessage
+                key={message.id}
+                message
+                deleteFlashMessage={this.props.deleteFlashMessage}
+            />
         );
         return (
             <div>{messages}</div>

@@ -17,6 +17,7 @@ class LoginPage extends React.Component {
         };
 
         this.onChange = this.onChange.bind(this);
+        this.login = this.login.bind(this);
     }
 
     onChange(e) {
@@ -61,7 +62,7 @@ class LoginPage extends React.Component {
                         />
                     </FormGroup>
 
-                    <Button type="submit" bsStyle="primary" onClick={this.login.bind(this)}>
+                    <Button type="submit" bsStyle="primary" onClick={this.login}>
                         Войти
                     </Button>
                 </form>

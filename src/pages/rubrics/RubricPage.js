@@ -62,7 +62,7 @@ class RubricPage extends React.Component {
                     {isEmpty(rubrics) ? 'Ничего не найдено' : <ReactPaginate
                         previousLabel="&lt;"
                         nextLabel="&gt;"
-                        breakLabel={<a onClick={() => { return false; }}>...</a>}
+                        breakLabel={<i>...</i>}
                         pageCount={rubricArticles.length / this.state.perPage}
                         marginPagesDisplayed={1}
                         pageRangeDisplayed={2}
